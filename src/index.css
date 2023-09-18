@@ -1,0 +1,27 @@
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    --darkgray: #555555;
+    --saffron: #ff4500;
+    --textlightgray: #757575;
+    --black: #000;
+    --white: #fff;
+}
+
+:root {
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}

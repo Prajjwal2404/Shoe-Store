@@ -1,0 +1,26 @@
+.color-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+}
+
+#all {
+    background: linear-gradient(blue, crimson);
+}
+
+#black {
+    background: black;
+}
+
+#blue {
+    background: blue;
+}
+
+#red {
+    background: red;
+}
+
+#white {
+    background: #ddd;
+}

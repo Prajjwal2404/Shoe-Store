@@ -1,0 +1,213 @@
+.details {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.back-btn {
+    position: fixed;
+    left: 2%;
+    top: 6rem;
+    font-size: 2rem;
+    color: var(--black);
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.back-btn:hover {
+    color: var(--saffron);
+}
+
+.cover-div {
+    position: fixed;
+    top: 9rem;
+    left: 7%;
+    width: 48rem;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #eaeaea;
+    border-radius: 20px;
+}
+
+.cover {
+    height: 28.5rem;
+    max-width: 48rem;
+    padding: 3rem;
+    transform: scaleX(-1);
+}
+
+.info {
+    position: absolute;
+    padding-top: 10rem;
+    right: 7%;
+    top: 0;
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.info::-webkit-scrollbar {
+    display: none;
+}
+
+.info .brand {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+    color: var(--textlightgray);
+}
+
+.info .title {
+    font-size: 2rem;
+}
+
+.info .review {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.review .stard {
+    font-size: 1.2rem;
+}
+
+.review p {
+    margin-left: 2rem;
+    font-size: 0.9rem;
+    font-weight: lighter;
+}
+
+.info .price-div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.35rem;
+}
+
+.price-div del {
+    font-size: 0.95rem;
+    font-weight: lighter;
+}
+
+.info .description {
+    font-size: 0.9rem;
+    line-height: 150%;
+}
+
+.info .selection {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: start;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.select>p {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+.select-div {
+    display: flex;
+    gap: 0.5rem;
+    border: 1px solid var(--darkgray);
+    border-radius: 20px;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+}
+
+.select-div span {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+}
+
+.select-div span:hover {
+    background: var(--darkgray);
+    color: #dadada;
+}
+
+#minus {
+    border-bottom-left-radius: 9px;
+    border-top-left-radius: 9px;
+}
+
+#plus {
+    border-bottom-right-radius: 9px;
+    border-top-right-radius: 9px;
+}
+
+.select-div p {
+    pointer-events: none;
+    width: 0.9rem;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.select-div .icon {
+    pointer-events: none;
+}
+
+.info .btns {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btns button {
+    padding: 1rem 1.5rem;
+    width: 15rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.btns .wishlist-added {
+    pointer-events: none;
+}
+
+.btns .icon-btn {
+    pointer-events: none;
+}
+
+.cart-btn {
+    background: #fd415f;
+    color: #eaeaea;
+    border: none;
+}
+
+.cart-btn:hover {
+    box-shadow: 0 0 7px #959595;
+}
+
+.wish-btn {
+    background: var(--white);
+    color: #fd415f;
+    border: 1px solid #fd415f;
+}
+
+.wish-btn:hover {
+    box-shadow: 0 0 7px #fd416080;
+}
+
+.info .reviews-title {
+    margin-top: 0.5rem;
+}
+
+.info .product-reviews-div {
+    padding: 0.8rem;
+    border-radius: 10px;
+    border: 1px solid #959595;
+    margin-bottom: 1rem;
+}

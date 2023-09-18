@@ -1,0 +1,81 @@
+.sort-div {
+    margin-right: 5rem;
+    position: relative;
+}
+
+.sort {
+    font-size: 0.9rem;
+    width: 10.3rem;
+    background: #ededed;
+    padding: 0.45rem 0.7rem 0.45rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    color: #555555;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    text-align: start;
+}
+
+.sort:hover {
+    background: #dadada;
+}
+
+.btndown {
+    display: block;
+    position: relative;
+    height: 0;
+}
+
+.dropdown {
+    width: 100%;
+    height: 0;
+    position: absolute;
+    margin-top: 0.3rem;
+    top: 0;
+    left: 0;
+    background: rgba(237, 237, 237, 0.5);
+    backdrop-filter: blur(30px);
+    border-radius: 6.5px;
+    box-shadow: 0 5px 30px #aaaaaa;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+    transition: height 0.25s;
+}
+
+.dropdown label li {
+    text-indent: 0.4rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    color: #303030;
+    border-radius: 3.2px;
+}
+
+.dropdown label:first-child li {
+    margin-top: 0.55rem;
+}
+
+.dropdown label:last-child li {
+    margin-bottom: 0.55rem;
+}
+
+.dropdown label li:hover {
+    background: #cfcfcf;
+}
+
+.dropdown label input {
+    display: none;
+}
+
+.sort-icon {
+    color: #555555;
+    font-size: 0.9rem;
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-55%);
+    pointer-events: none;
+}

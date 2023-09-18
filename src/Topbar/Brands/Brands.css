@@ -1,0 +1,27 @@
+.brands {
+    margin-left: 19rem;
+}
+
+.brand-btn {
+    font-size: 0.8rem;
+    background: transparent;
+    padding: 0.4rem 0.6rem;
+    border: 2px solid #dadada;
+    border-radius: 8px;
+    margin-right: 0.5rem;
+    color: black;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.brand-container input {
+    display: none;
+}
+
+.brand-btn:hover {
+    background-color: #dadada;
+}
+
+.brand-container input:checked~.brand-btn {
+    background-color: #dadada;
+}

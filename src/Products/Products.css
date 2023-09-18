@@ -1,0 +1,99 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 16rem));
+    grid-template-rows: auto;
+    justify-content: start;
+    gap: 2rem;
+    margin-left: 19rem;
+    padding-bottom: 1rem;
+}
+
+.card {
+    padding: 1.25rem;
+    cursor: pointer;
+    border: 2px solid #ededed;
+    border-radius: 16px;
+    position: relative;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px 5px #eaeaea;
+}
+
+.close {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: var(--textlightgray);
+    font-size: 1.4rem;
+}
+
+.close:hover {
+    color: var(--saffron);
+}
+
+.img-div {
+    width: 12.5rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.card-img {
+    max-width: 12rem;
+    height: 7.125rem;
+}
+
+.card-details {
+    margin-bottom: 0.8rem;
+    color: black;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.reviews {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 0.8rem;
+    color: black;
+}
+
+.stars {
+    font-size: 1rem;
+}
+
+.total-reviews {
+    margin-left: auto;
+    font-size: 0.75rem;
+    margin-right: 0.3rem;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: bold;
+    color: black;
+}
+
+.price del {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.bag {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+    background: #fd415f;
+    border-radius: 24px;
+    font-weight: bold;
+    color: #fafafa;
+}
+
+.bag:hover {
+    box-shadow: 0 0 7px #959595;
+}
