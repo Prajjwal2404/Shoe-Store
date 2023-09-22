@@ -171,7 +171,7 @@
     cursor: pointer;
 }
 
-.btns .wishlist-added {
+.btns .added {
     pointer-events: none;
 }
 
@@ -204,8 +204,8 @@
 }
 
 .info .product-reviews-div {
-    padding: 0.8rem;
+    padding: 1rem;
     border-radius: 10px;
     border: 1px solid #959595;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }

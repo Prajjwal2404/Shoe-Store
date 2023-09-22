@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import Listings from '../Components/Listings'
 import { defer, useLoaderData, useSearchParams, Await } from 'react-router-dom';
 import { data } from '../DB/FirebaseConfig';
+import Loading from '../Loading/Loading';
 
 export function loader() {
     return defer({ dataSet: data() })
@@ -13,7 +14,7 @@ export default function Search() {
     const query = searchParams.get('q');
     return (
         <>
-            <Suspense fallback={<h2 style={{ textAlign: 'center', marginTop: '7rem' }}>Loading...</h2>}>
+            <Suspense fallback={<Loading />}>
                 <Await resolve={dataSetPromise.dataSet}>
                     {dataSetLoaded => {
                         const products = dataSetLoaded.filter(({ title }) => title.toLowerCase().includes(query.toLowerCase()));

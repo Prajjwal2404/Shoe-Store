@@ -32,7 +32,7 @@
 }
 
 .wrapper.active-pass {
-    height: 560px;
+    height: 410px;
 }
 
 .wrapper .form-box.login {
@@ -196,12 +196,14 @@
 }
 
 .remember-forgot label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     cursor: pointer;
 }
 
 .remember-forgot label input {
     accent-color: var(--darkgray);
-    margin-right: 5px;
     cursor: pointer;
 }
 

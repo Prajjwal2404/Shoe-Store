@@ -1,0 +1,211 @@
+.form-container {
+    width: 100%;
+    margin-top: 11rem;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.autofill {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+    cursor: pointer;
+    background: #eaeaea;
+    margin-bottom: 1rem;
+}
+
+.autofill.location {
+    pointer-events: none;
+}
+
+.autofill:hover {
+    background: #dadada
+}
+
+.form-container .add-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.add-form .add-input-div {
+    width: 100%;
+    height: 3.5rem;
+    padding: 0.8rem;
+    background: #eaeaea;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.add-input-div .add-input {
+    width: 100%;
+    outline: none;
+    border: none;
+    background: transparent;
+    text-indent: 0.2rem;
+    font-size: 0.95rem;
+}
+
+.add-input::-webkit-outer-spin-button,
+.add-input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+.add-input::-webkit-input-placeholder {
+    color: #757575;
+}
+
+.state-city-div {
+    width: 100%;
+    display: flex;
+    gap: 3rem;
+}
+
+.add-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: #eaeaea;
+}
+
+.add-btn:hover {
+    background: #dadada
+}
+
+.add-form .save-add {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0 0.5rem 0 0.5rem;
+}
+
+.add-form .save-add label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.add-form .save-add input {
+    cursor: pointer;
+}
+
+.add-form .save-add a {
+    cursor: pointer;
+}
+
+.add-form .save-add a:hover {
+    color: var(--saffron);
+}
+
+.add-wrapper {
+    width: 30rem;
+    height: 32rem;
+    transition: 0.5s;
+}
+
+.add-wrapper.hidden {
+    position: absolute;
+    transform: translateX(-500px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.saved-add-wrapper {
+    width: 30rem;
+    height: 32rem;
+    transition: 0.5s;
+}
+
+.saved-add-wrapper.hidden {
+    position: absolute;
+    transform: translateX(500px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.add-card-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1rem;
+    height: 25.5rem;
+    overflow-y: scroll;
+    margin-bottom: 1.15rem;
+    border-radius: 10px;
+    background: #fafafa;
+    padding: 0 0.5rem;
+}
+
+.add-card-container.empty {
+    justify-content: center;
+    align-items: center;
+}
+
+.add-card-label input {
+    display: none;
+}
+
+.add-card-label input:checked~.add-card-div {
+    border: 1px solid var(--darkgray);
+    background: #dadada;
+}
+
+.add-card-div {
+    width: 100%;
+    border-radius: 10px;
+    background: #eaeaea;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-self: start;
+    gap: 0.25rem;
+    cursor: pointer;
+}
+
+.add-card-div:hover {
+    background: #dadada;
+}
+
+.add-card-div h4 {
+    font-size: 1.1rem;
+}
+
+.new-add {
+    cursor: pointer;
+    margin-left: 0.5rem;
+}
+
+.new-add:hover {
+    color: var(--saffron);
+}
+
+.saved-add-btn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background: #eaeaea;
+    margin-top: 1rem;
+}
+
+.saved-add-btn:hover {
+    background: #dadada
+}

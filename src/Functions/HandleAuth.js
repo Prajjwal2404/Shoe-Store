@@ -39,7 +39,7 @@ export default async function HandleAuth(formData) {
             const userRef = doc(db, 'Users', auth.currentUser.uid)
             const fields = {
                 username: formData.get('regUser'), usernameLower: formData.get('regUser').toLowerCase(),
-                email: auth.currentUser.email, wishlist: [], cart: [{ id: '', quantity: 0 }]
+                email: auth.currentUser.email, wishlist: [], cart: [], addresses: [], orders: []
             }
             await setDoc(userRef, fields)
             return { success: true, redirect: true }

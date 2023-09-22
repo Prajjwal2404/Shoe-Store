@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from '../Components/Card'
+import { useOutletContext } from 'react-router-dom';
 import './Products.css'
 
 export default function Products({ products, isWishlist, removeWishlist }) {
@@ -15,6 +16,9 @@ export default function Products({ products, isWishlist, removeWishlist }) {
         newPrice={newPrice}
         isWishlist={isWishlist}
         removeWishlist={removeWishlist} />));
+
+    const outletContext = useOutletContext()
+    outletContext.getCartItems()
 
     return (
         <section className='card-container'>

@@ -8,18 +8,23 @@ import Kids from './Pages/KidsPage'
 import Search from './Pages/SearchPage';
 import Details from './Details/Details';
 import WishList from './Pages/WishList'
-import Cart from './Pages/CartPage'
+import CartNav from './CartPage/CartNav/CartNav';
+import CartEl from './CartPage/Cart/Cart';
+import AddressEl from './CartPage/Address/Address'
+import PaymentEl from './CartPage/Payment/Payment'
 import Account from './Account/Account';
 import LoginPage from './Pages/LoginPage';
 import NotFound from './Pages/NotFoundPage';
 import Error from './Pages/ErrorPage';
-import RequireAuth from './Functions/HandleUser';
 import { action as loginAction } from './Login/Login';
+import { action as addressAction } from './CartPage/Address/Address';
 import { loader as HomeLoader } from './Pages/HomePage';
 import { loader as DetailLoader } from './Details/Details';
 import { loader as SearchLoader } from './Pages/SearchPage';
 import { loader as WishlistLoader } from './Pages/WishList';
+import { loader as CartLoader } from './CartPage/CartNav/CartNav';
 import { loader as AccountLoader } from './Account/Account';
+import { loader as LoginLoader } from './Pages/LoginPage';
 
 export default function App() {
 
@@ -32,9 +37,13 @@ export default function App() {
             <Route path='search' element={<Search />} loader={SearchLoader} />
             <Route path='details/:id' element={<Details />} loader={DetailLoader} errorElement={<Error />} />
             <Route path='wishlist' element={<WishList />} loader={WishlistLoader} />
-            <Route path='cart' element={<Cart />} loader={async ({ request }) => await RequireAuth(request)} />
+            <Route path='cart' element={<CartNav />} loader={CartLoader} >
+                <Route index element={<CartEl />} />
+                <Route path='address' element={<AddressEl />} action={addressAction} />
+                <Route path='payment' element={<PaymentEl />} />
+            </Route>
             <Route path='account' element={<Account />} loader={AccountLoader} />
-            <Route path='login' element={<LoginPage />} action={loginAction} />
+            <Route path='login' element={<LoginPage />} action={loginAction} loader={LoginLoader} />
             <Route path='*' element={<NotFound />} />
         </Route>
     ))

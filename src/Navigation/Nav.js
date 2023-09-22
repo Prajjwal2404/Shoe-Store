@@ -4,14 +4,16 @@ import { BiCartAlt } from "react-icons/bi";
 import { GiRunningShoe } from "react-icons/gi";
 import { FiSearch } from "react-icons/fi";
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { auth } from '../DB/FirebaseConfig';
+import { auth, user } from '../DB/FirebaseConfig';
 import { onAuthStateChanged } from "firebase/auth"
 import Login from '../Login/Login';
+import { CurrentUser } from '../Functions/HandleUser';
 import './Nav.css'
 
 export default function Nav() {
 
     const [query, setQuery] = useState('');
+    const [cartItems, setCartItems] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = event => {
@@ -53,7 +55,19 @@ export default function Nav() {
     }
 
 
-    let cartitems = '01';
+    async function getCartItems() {
+        const currentuser = await CurrentUser()
+        if (currentuser) {
+            const userObj = await user(currentuser.uid)
+            var totalItems = 0
+            userObj.cart.forEach(item => totalItems += item.quantity)
+            const totalItemsStr = (totalItems <= 9 && totalItems > 0) ? `0${totalItems}` :
+                (totalItems > 9) ? `${totalItems}` : ''
+            setCartItems(totalItemsStr)
+        }
+        else setCartItems('')
+    }
+
 
     return (
         <>
@@ -84,7 +98,7 @@ export default function Nav() {
                     <NavLink to={'wishlist'} className={({ isActive }) => isActive ? 'active' : ''}>
                         <AiOutlineHeart className='wishlist' />
                     </NavLink>
-                    <NavLink to={'cart'} className={`cart ${({ isActive }) => isActive ? 'active' : ''}`} cartitems={cartitems}>
+                    <NavLink to={'cart'} className={`cart ${({ isActive }) => isActive ? 'active' : ''}`} cartitems={cartItems}>
                         <BiCartAlt />
                     </NavLink>
                     {signin ? <NavLink to={'account'} className={({ isActive }) => isActive ? 'active' : ''}>
@@ -92,7 +106,7 @@ export default function Nav() {
                 </div>
             </nav>
             {!signin && <Login wrapper={wrapper} />}
-            <Outlet />
+            <Outlet context={{ getCartItems }} />
         </>
     )
 }

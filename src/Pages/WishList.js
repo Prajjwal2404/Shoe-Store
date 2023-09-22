@@ -4,6 +4,7 @@ import RequireAuth, { CurrentUser } from '../Functions/HandleUser'
 import { Await, defer, useLoaderData } from 'react-router-dom'
 import Listings from '../Components/Listings'
 import { arrayRemove, doc, updateDoc } from 'firebase/firestore/lite'
+import Loading from '../Loading/Loading'
 
 export async function loader({ request }) {
     await RequireAuth(request)
@@ -14,9 +15,14 @@ export default function WishList() {
 
     const dataSetPromise = useLoaderData();
     const [wishlistSet, setWishlistSet] = useState([]);
-    const [initialData, setInitialData] = useState([]);
 
-    useEffect(() => setWishlistSet(initialData), [initialData])
+    useEffect(() => {
+        async function fetchData() {
+            const dataset = await dataSetPromise.dataSet;
+            setWishlistSet(dataset)
+        }
+        fetchData()
+    }, [])
 
 
     async function removeWishlist(productId, event) {
@@ -27,15 +33,14 @@ export default function WishList() {
     }
 
     return (
-        <>
-            <Suspense fallback={<h2 style={{ textAlign: 'center', marginTop: '7rem' }}>Loading...</h2>}>
-                <Await resolve={dataSetPromise.dataSet}>
-                    {dataSetLoaded => {
-                        setInitialData(dataSetLoaded)
-                        return <Listings data={wishlistSet} isWishlist={true} removeWishlist={removeWishlist} />
-                    }}
-                </Await>
-            </Suspense>
-        </>
+        <Suspense fallback={<Loading />}>
+            <Await resolve={dataSetPromise.dataSet}>
+                {() => {
+                    return wishlistSet.length > 0 ?
+                        <Listings data={wishlistSet} isWishlist={true} removeWishlist={removeWishlist} /> :
+                        <h2 style={{ marginTop: '7rem', textAlign: 'center' }}>Your wishlist is empty</h2>
+                }}
+            </Await>
+        </Suspense>
     )
 }

@@ -141,23 +141,10 @@ export default function Login({ wrapper }) {
                             <label>Username</label>
                         </div>
                         <div className="input-box">
-                            <span className="icon otp-push resend"><IoRefreshCircleOutline /></span>
-                            <span className="icon"><IoShieldOutline /></span>
-                            <input className='form-input' type="password" required name="resetOtp" maxLength={6} minLength={6} empty=''
+                            <span className="icon"><IoMailOutline /></span>
+                            <input className='form-input' type="email" required name="resetMail" empty=''
                                 onChange={(e) => e.target.setAttribute('empty', e.target.value)} />
-                            <label>One-Time Password</label>
-                        </div>
-                        <div className="input-box">
-                            <span className="icon"><IoLockClosedOutline /></span>
-                            <input className='form-input' type="password" required name="resetPass" minLength={8} empty=''
-                                onChange={(e) => e.target.setAttribute('empty', e.target.value)} />
-                            <label>New Password</label>
-                        </div>
-                        <div className="input-box">
-                            <span className="icon"><IoLockClosedOutline /></span>
-                            <input className='form-input' type="password" required name="resetRePass" minLength={8} empty=''
-                                onChange={(e) => e.target.setAttribute('empty', e.target.value)} />
-                            <label>Confirm Password</label>
+                            <label>Email</label>
                         </div>
                         <button disabled={navigation.state === 'submitting'} type="submit" className="btn">
                             {navigation.state === 'submitting' ? 'Changing...' : 'Change'}

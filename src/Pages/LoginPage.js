@@ -1,5 +1,13 @@
 import React, { useRef } from 'react'
 import Login from '../Login/Login'
+import { CurrentUser } from '../Functions/HandleUser';
+import { redirect } from 'react-router-dom';
+
+export async function loader() {
+    const required = await CurrentUser()
+    if (required) throw redirect('/')
+    return null
+}
 
 export default function LoginPage() {
 

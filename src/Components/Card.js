@@ -1,16 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Star from './Star';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { IoMdCloseCircle } from 'react-icons/io'
+import { CurrentUser } from '../Functions/HandleUser';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore/lite';
+import { db, user } from '../DB/FirebaseConfig';
 
 export default function Card(props) {
 
-    function handleClick(event) {
+    const navigate = useNavigate()
+    const location = useLocation()
+    const outletContext = useOutletContext()
+    const [inCart, setInCart] = useState(false)
+
+    async function handleClick(event) {
         event.preventDefault();
-        event.target.style.background = 'green';
-        event.target.style.pointerEvents = 'none';
-        event.target.textContent = 'Added';
+        const currentuser = await CurrentUser();
+        if (currentuser) {
+            const userDocRef = doc(db, 'Users', currentuser.uid)
+            await updateDoc(userDocRef, { cart: arrayUnion({ id: props.id, quantity: 1, size: 6 }) })
+            await outletContext.getCartItems()
+            setInCart(true)
+        }
+        else {
+            navigate(`/login?redirectTo=${location.pathname}`)
+        }
     }
+
+    useEffect(() => {
+        async function checkCart() {
+            const currentuser = await CurrentUser();
+            if (currentuser) {
+                const userObj = await user(currentuser.uid);
+                if (userObj.cart.find(e => e.id === props.id)) {
+                    setInCart(true)
+                }
+            }
+        }
+        checkCart()
+    }, [])
+
 
     return (
         <Link to={`/details/${props.id}`}>
@@ -29,10 +58,10 @@ export default function Card(props) {
                 </div>
                 <section className='price'>
                     <div className='card-price'>
-                        ${props.newPrice}<del>{props.prevPrice}</del>
+                        ${props.newPrice}<del>${props.prevPrice}.00</del>
                     </div>
-                    <div className='bag' onClick={handleClick}>
-                        Add To Cart
+                    <div className={`bag ${inCart ? 'in-bag' : ''}`} onClick={handleClick}>
+                        {inCart ? 'Added' : 'Add To Cart'}
                     </div>
                 </section>
             </section>

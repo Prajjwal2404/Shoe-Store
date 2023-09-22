@@ -2,7 +2,7 @@ import React from 'react'
 import { auth, user } from '../DB/FirebaseConfig'
 import RequireAuth, { CurrentUser } from '../Functions/HandleUser'
 import { signOut } from "firebase/auth"
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate, useOutletContext } from 'react-router-dom'
 
 export async function loader({ request }) {
     await RequireAuth(request)
@@ -13,6 +13,8 @@ export default function Account() {
 
     const navigate = useNavigate();
     const userObj = useLoaderData();
+    const outletContext = useOutletContext();
+    outletContext.getCartItems()
 
     const style = {
         marginTop: '7rem', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem'
