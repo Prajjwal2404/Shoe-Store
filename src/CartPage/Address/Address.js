@@ -31,8 +31,8 @@ async function orderPlaced() {
     const userObj = await user(currentuser.uid)
     const date = new Date()
     const items = userObj.cart.map(item => ({
-        ...item, timeStamp: date, month: date.toLocaleString('default',
-            { month: 'long' })
+        ...item, timeStamp: date, month: `${date.toLocaleString('default',
+            { month: 'long' })} ${date.getFullYear()}`
     }))
     const userDocRef = doc(db, 'Users', currentuser.uid)
     await updateDoc(userDocRef, { cart: [] })

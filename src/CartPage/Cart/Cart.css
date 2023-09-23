@@ -20,7 +20,7 @@
     justify-content: start;
     align-items: center;
     gap: 2rem;
-    padding: 1rem;
+    padding: 0.75rem;
     cursor: pointer;
     border: 2px solid #ededed;
     border-radius: 16px;

@@ -1,0 +1,20 @@
+.acc-nav {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    padding-top: 7rem;
+    padding-left: 5rem;
+    z-index: 900;
+    gap: 5rem;
+    border: none;
+    background-color: var(--white);
+}
+
+.acc-nav a {
+    color: var(--black);
+}
+
+.acc-nav .active-acc {
+    color: var(--saffron);
+}

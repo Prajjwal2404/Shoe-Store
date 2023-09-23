@@ -174,7 +174,6 @@
     display: flex;
     flex-direction: column;
     justify-self: start;
-    gap: 0.25rem;
     cursor: pointer;
 }
 
@@ -184,6 +183,10 @@
 
 .add-card-div h4 {
     font-size: 1.1rem;
+}
+
+.add-card-div p {
+    line-height: 150%;
 }
 
 .new-add {

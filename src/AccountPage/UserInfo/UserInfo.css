@@ -1,0 +1,42 @@
+.user-info-container {
+    width: fit-content;
+    margin-top: 12rem;
+    margin-left: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.user-info-div {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info-div p {
+    font-size: 1.25rem;
+}
+
+.user-info-container button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    width: 180px;
+    border: 2px solid var(--darkgray);
+    outline: none;
+    background: transparent;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: var(--black);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.user-info-container button:hover {
+    background: var(--darkgray);
+    color: #eaeaea;
+}

@@ -1,0 +1,40 @@
+.adds-card-container {
+    width: fit-content;
+    margin-top: 12rem;
+    margin-left: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.adds-card-div {
+    width: 25rem;
+    border-radius: 10px;
+    background: #eaeaea;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.adds-card-div .adds-remove-icon {
+    position: absolute;
+    top: 8%;
+    right: 3%;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.adds-card-div .adds-remove-icon:hover {
+    color: var(--saffron);
+}
+
+.adds-card-div h4 {
+    font-size: 1.1rem;
+}
+
+.adds-card-div p {
+    line-height: 150%;
+}

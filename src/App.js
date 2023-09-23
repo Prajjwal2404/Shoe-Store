@@ -12,7 +12,10 @@ import CartNav from './CartPage/CartNav/CartNav';
 import CartEl from './CartPage/Cart/Cart';
 import AddressEl from './CartPage/Address/Address'
 import PaymentEl from './CartPage/Payment/Payment'
-import Account from './Account/Account';
+import AccountNav from './AccountPage/AccountNav/AccountNav';
+import UserInfo from './AccountPage/UserInfo/UserInfo';
+import Addresses from './AccountPage/Addresses/Addresses';
+import Orders from './AccountPage/Orders/Orders';
 import LoginPage from './Pages/LoginPage';
 import NotFound from './Pages/NotFoundPage';
 import Error from './Pages/ErrorPage';
@@ -23,7 +26,7 @@ import { loader as DetailLoader } from './Details/Details';
 import { loader as SearchLoader } from './Pages/SearchPage';
 import { loader as WishlistLoader } from './Pages/WishList';
 import { loader as CartLoader } from './CartPage/CartNav/CartNav';
-import { loader as AccountLoader } from './Account/Account';
+import { loader as AccountLoader } from './AccountPage/AccountNav/AccountNav';
 import { loader as LoginLoader } from './Pages/LoginPage';
 
 export default function App() {
@@ -42,7 +45,11 @@ export default function App() {
                 <Route path='address' element={<AddressEl />} action={addressAction} />
                 <Route path='payment' element={<PaymentEl />} />
             </Route>
-            <Route path='account' element={<Account />} loader={AccountLoader} />
+            <Route path='account' element={<AccountNav />} loader={AccountLoader} >
+                <Route index element={<UserInfo />} />
+                <Route path='addresses' element={<Addresses />} />
+                <Route path='orders' element={<Orders />} />
+            </Route>
             <Route path='login' element={<LoginPage />} action={loginAction} loader={LoginLoader} />
             <Route path='*' element={<NotFound />} />
         </Route>
