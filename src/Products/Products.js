@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import './Products.css'
 
 export default function Products({ products, isWishlist, removeWishlist }) {
-    let productlist = products.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice }) =>
+    let productlist = products.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
     (<Card
         key={Sno}
         id={id}
@@ -14,6 +14,7 @@ export default function Products({ products, isWishlist, removeWishlist }) {
         reviews={reviews}
         prevPrice={prevPrice}
         newPrice={newPrice}
+        gender={gender}
         isWishlist={isWishlist}
         removeWishlist={removeWishlist} />));
 

@@ -21,7 +21,7 @@ export default function Details() {
     const navigate = useNavigate();
     const location = useLocation();
     const outletContext = useOutletContext();
-    const [size, setSize] = useState(6);
+    const [size, setSize] = useState();
     const [quantity, setQuantity] = useState(1);
     const [added, setAdded] = useState({ wishlist: false, cart: false })
     const [totalReview, setTotalReview] = useState({ star: 0, total: 0 })
@@ -31,6 +31,10 @@ export default function Details() {
     useEffect(() => {
         async function check() {
             const productLoaded = await product.product
+            if (productLoaded.gender === 'Male') setSize(6)
+            else if (productLoaded.gender === 'Female') setSize(3)
+            else setSize(2)
+
             const currentuser = await CurrentUser()
             if (currentuser) {
                 const userobj = await user(currentuser.uid)
@@ -76,6 +80,23 @@ export default function Details() {
         }
 
 
+        var max, min
+        if (productLoaded.gender === 'Male') {
+            max = 13
+            min = 6
+        }
+
+        else if (productLoaded.gender === 'Female') {
+            max = 9
+            min = 3
+        }
+
+        else {
+            max = 13
+            min = 2
+        }
+
+
         function handleClickSize(event, min, max) {
             const id = event.target.id;
             setSize(prevSize => (id === 'minus' && prevSize > min) ? prevSize - 1 :
@@ -108,7 +129,7 @@ export default function Details() {
                     </div>
                     <p className='description'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis consectetur laudantium quaerat non harum placeat omnis. Distinctio, debitis sunt aliquid aut hic odio repellat quae porro, qui est, vitae perferendis!</p>
                     <div className='selection'>
-                        <Select title='SIZE (UK)' min={6} max={12} selection={size}
+                        <Select title='SIZE (UK)' min={min} max={max} selection={size}
                             handleClick={handleClickSize} />
                         <Select title='QUANTITIY' min={1} max={10} selection={quantity}
                             handleClick={handleClickQuantity} />

@@ -50,7 +50,7 @@ export default function CartEl() {
     }, [updated])
 
 
-    const cartProducts = cartItems.map(({ id, Sno, img, company, title, prevPrice, newPrice }, idx) => (
+    const cartProducts = cartItems.map(({ id, Sno, img, company, title, prevPrice, newPrice, gender }, idx) => (
         <CartItem
             key={Sno}
             id={id}
@@ -60,6 +60,7 @@ export default function CartEl() {
             prevPrice={prevPrice}
             newPrice={newPrice}
             removeItem={removeItem}
+            gender={gender}
             size={cartDataSet[idx].size}
             quantity={cartDataSet[idx].quantity}
             updateSize={updateSize}

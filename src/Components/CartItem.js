@@ -8,6 +8,22 @@ export default function CartItem(props) {
 
     const isMobile = HandleMedia('screen and (max-width: 800px) and (orientation: portrait)')
 
+    var max, min
+    if (props.gender === 'Male') {
+        max = 13
+        min = 6
+    }
+
+    else if (props.gender === 'Female') {
+        max = 9
+        min = 3
+    }
+
+    else {
+        max = 13
+        min = 2
+    }
+
     return (
         <Link to={`/details/${props.id}`}>
             <section className='cart-card'>
@@ -33,7 +49,7 @@ export default function CartItem(props) {
                             <p>QUANTITIY: {props.quantity}</p>
                         </div> :
                         <div className='cart-selection-div'>
-                            <Select title='SIZE (UK)' min={6} max={12} id={props.id} selection={props.size}
+                            <Select title='SIZE (UK)' min={min} max={max} id={props.id} selection={props.size}
                                 handleClick={props.updateSize} />
                             <Select title='QUANTITIY' min={1} max={10} id={props.id} selection={props.quantity}
                                 handleClick={props.updateQuantity} />

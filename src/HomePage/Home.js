@@ -44,7 +44,7 @@ export default function Home() {
         }
 
         const fourtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === 150)
-        const fourtyOffElems = fourtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice }) =>
+        const fourtyOffElems = fourtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
             key={Sno}
             id={id}
@@ -53,10 +53,11 @@ export default function Home() {
             title={title}
             reviews={reviews}
             prevPrice={prevPrice}
-            newPrice={newPrice} />))
+            newPrice={newPrice}
+            gender={gender} />))
 
         const sixtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === 100)
-        const sixtyOffElems = sixtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice }) =>
+        const sixtyOffElems = sixtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
             key={Sno}
             id={id}
@@ -65,10 +66,11 @@ export default function Home() {
             title={title}
             reviews={reviews}
             prevPrice={prevPrice}
-            newPrice={newPrice} />))
+            newPrice={newPrice}
+            gender={gender} />))
 
         const hushArr = dataSetLoaded.filter(({ company }) => company === 'Hush Puppies')
-        const hushElems = hushArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice }) =>
+        const hushElems = hushArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
             key={Sno}
             id={id}
@@ -77,10 +79,11 @@ export default function Home() {
             title={title}
             reviews={reviews}
             prevPrice={prevPrice}
-            newPrice={newPrice} />))
+            newPrice={newPrice}
+            gender={gender} />))
 
         const pumaArr = dataSetLoaded.filter(({ company }) => company === 'Puma')
-        const pumaElems = pumaArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice }) =>
+        const pumaElems = pumaArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
             key={Sno}
             id={id}
@@ -89,7 +92,8 @@ export default function Home() {
             title={title}
             reviews={reviews}
             prevPrice={prevPrice}
-            newPrice={newPrice} />))
+            newPrice={newPrice}
+            gender={gender} />))
 
 
         return (

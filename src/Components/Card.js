@@ -17,8 +17,13 @@ export default function Card(props) {
         event.preventDefault();
         const currentuser = await CurrentUser();
         if (currentuser) {
+            var size
+            if (props.gender === 'Male') size = 6
+            else if (props.gender === 'Female') size = 3
+            else size = 2
+
             const userDocRef = doc(db, 'Users', currentuser.uid)
-            await updateDoc(userDocRef, { cart: arrayUnion({ id: props.id, quantity: 1, size: 6 }) })
+            await updateDoc(userDocRef, { cart: arrayUnion({ id: props.id, quantity: 1, size: size }) })
             await outletContext.getCartItems()
             setInCart(true)
         }

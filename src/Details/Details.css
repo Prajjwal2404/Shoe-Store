@@ -231,4 +231,8 @@
         max-width: 25rem;
         height: 14.29rem;
     }
+
+    .select-div {
+        font-size: 1rem;
+    }
 }

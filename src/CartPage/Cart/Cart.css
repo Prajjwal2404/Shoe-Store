@@ -186,6 +186,10 @@
         height: 5.125rem;
     }
 
+    .cart-card-details h3 {
+        white-space: unset;
+    }
+
     .cart-card-priceM {
         display: flex;
         align-items: center;
