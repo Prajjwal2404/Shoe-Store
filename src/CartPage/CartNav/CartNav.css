@@ -78,7 +78,7 @@
 
     .cart-nav {
         gap: 0.3rem;
-        padding-top: 6rem;
+        padding-bottom: 1rem;
     }
 
     .cart-nav hr {
