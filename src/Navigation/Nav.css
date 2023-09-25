@@ -130,6 +130,7 @@ nav {
 
 @media screen and (max-width: 1100px) {
     .navigation {
+        padding: 0.3rem 0.9rem;
         position: absolute;
         top: 100%;
         right: -100%;
