@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Topbar from '../Topbar/Topbar';
 import Sidebar from '../Sidebar/Sidebar';
 import Products from '../Products/Products';
+import HandleMedia from '../Functions/HandleMedia'
 
-export default function Listings({ data, isWishlist, removeWishlist }) {
+export default function Listings({ data, isWishlist, removeWishlist, isMale, isFemale, isKids }) {
+
+  const isMobile = HandleMedia('800px')
+
+  const ref = useRef([])
+
   const [selectedFilter, setSelectedFilter] = useState({
     category: '',
     price: '',
@@ -67,9 +73,10 @@ export default function Listings({ data, isWishlist, removeWishlist }) {
   return (
     <>
       <Sidebar handleFilter={handleFilter} selectedCategory={selectedFilter.category}
-        selectedPrice={selectedFilter.price} selectedColor={selectedFilter.color} />
+        selectedPrice={selectedFilter.price} selectedColor={selectedFilter.color} selectedSort={selectedFilter.sort}
+        myref={ref} isMale={isMale} isFemale={isFemale} isKids={isKids} isMobile={isMobile} />
       <Topbar handleFilter={handleFilter} brandShown={brandShown} selectedBrand={selectedFilter.brand}
-        selectedSort={selectedFilter.sort} />
+        selectedSort={selectedFilter.sort} myref={ref} isMobile={isMobile} />
       <Products isWishlist={isWishlist} products={result} removeWishlist={removeWishlist} />
     </>
   );

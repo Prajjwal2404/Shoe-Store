@@ -1,0 +1,17 @@
+{
+  "short_name": "Shoe Store",
+  "name": "Shoe Store",
+  "icons": [
+    {
+      "src": "running-shoe.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "description": "An Ecommerce website for selling footwear online made using ReactJS."
+}

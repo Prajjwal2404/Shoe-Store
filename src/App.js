@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import Nav from './Navigation/Nav'
-import Home from './Pages/HomePage';
+import Home from './HomePage/Home';
 import Men from './Pages/MenPage'
 import Women from './Pages/WomenPage'
 import Kids from './Pages/KidsPage'
@@ -21,7 +21,10 @@ import NotFound from './Pages/NotFoundPage';
 import Error from './Pages/ErrorPage';
 import { action as loginAction } from './Login/Login';
 import { action as addressAction } from './CartPage/Address/Address';
-import { loader as HomeLoader } from './Pages/HomePage';
+import { loader as HomeLoader } from './HomePage/Home';
+import { loader as MenLoader } from './Pages/MenPage';
+import { loader as WomenLoader } from './Pages/WomenPage';
+import { loader as KidsLoader } from './Pages/KidsPage';
 import { loader as DetailLoader } from './Details/Details';
 import { loader as SearchLoader } from './Pages/SearchPage';
 import { loader as WishlistLoader } from './Pages/WishList';
@@ -34,9 +37,9 @@ export default function App() {
     const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<Nav />} action={loginAction} errorElement={<Error />}>
             <Route index element={<Home />} loader={HomeLoader} />
-            <Route path='men' element={<Men />} />
-            <Route path='women' element={<Women />} />
-            <Route path='kids' element={<Kids />} />
+            <Route path='men' element={<Men />} loader={MenLoader} />
+            <Route path='women' element={<Women />} loader={WomenLoader} />
+            <Route path='kids' element={<Kids />} loader={KidsLoader} />
             <Route path='search' element={<Search />} loader={SearchLoader} />
             <Route path='details/:id' element={<Details />} loader={DetailLoader} errorElement={<Error />} />
             <Route path='wishlist' element={<WishList />} loader={WishlistLoader} />

@@ -1,5 +1,6 @@
 .sort-div {
     margin-right: 5rem;
+    margin-left: 2rem;
     position: relative;
 }
 
@@ -34,10 +35,9 @@
     margin-top: 0.3rem;
     top: 0;
     left: 0;
-    background: rgba(237, 237, 237, 0.5);
-    backdrop-filter: blur(30px);
+    background: #ededed;
     border-radius: 6.5px;
-    box-shadow: 0 5px 30px #aaaaaa;
+    box-shadow: 0 5px 30px #959595;
     overflow: hidden;
     cursor: pointer;
     z-index: 1;

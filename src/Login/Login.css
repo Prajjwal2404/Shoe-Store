@@ -14,11 +14,9 @@
     position: relative;
     width: 400px;
     height: 440px;
-    background-color: rgba(237, 237, 237, 0.5);
+    background-color: #ededed;
     border-radius: 20px;
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    box-shadow: 0 0 30px #aaaaaa;
+    box-shadow: 0 0 30px #959595;
     display: none;
     align-items: center;
     justify-content: center;

@@ -24,11 +24,11 @@ export default function AccountNav() {
                         <>
                             <nav className='acc-nav'>
                                 <NavLink to={'/account'} end className={({ isActive }) => isActive ? 'active-acc' : ''}>
-                                    USER INFO</NavLink>
+                                    User Info</NavLink>
                                 <NavLink to={'addresses'} className={({ isActive }) => isActive ? 'active-acc' : ''}>
-                                    SAVED ADDRESSES</NavLink>
+                                    Saved Addresses</NavLink>
                                 <NavLink to={'orders'} className={({ isActive }) => isActive ? 'active-acc' : ''}>
-                                    ORDER HISTORY</NavLink>
+                                    Order History</NavLink>
                             </nav>
                             <Outlet context={{ dataSetLoaded }} />
                         </>

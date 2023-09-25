@@ -6,15 +6,21 @@
     padding-top: 7rem;
     padding-left: 5rem;
     z-index: 900;
-    gap: 5rem;
+    gap: 4rem;
     border: none;
     background-color: var(--white);
 }
 
 .acc-nav a {
     color: var(--black);
+    font-size: 1.2rem;
+}
+
+.acc-nav a:hover {
+    color: var(--saffron);
 }
 
 .acc-nav .active-acc {
     color: var(--saffron);
+    text-decoration: underline;
 }

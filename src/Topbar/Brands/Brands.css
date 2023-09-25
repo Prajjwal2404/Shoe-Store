@@ -1,5 +1,28 @@
 .brands {
     margin-left: 19rem;
+    width: 100%;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.5rem;
+    overflow-x: scroll;
+    scrollbar-width: 0;
+}
+
+.brands::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-icon {
+    color: #bababa;
+    font-size: 2rem;
+    transform: translateY(0.15rem);
+    cursor: pointer;
+}
+
+.filter-icon:hover {
+    color: var(--saffron);
 }
 
 .brand-btn {
@@ -8,7 +31,6 @@
     padding: 0.4rem 0.6rem;
     border: 2px solid #dadada;
     border-radius: 8px;
-    margin-right: 0.5rem;
     color: black;
     white-space: nowrap;
     cursor: pointer;

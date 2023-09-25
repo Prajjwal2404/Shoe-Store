@@ -7,13 +7,31 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    z-index: 3;
+    z-index: 30;
     border-right: 2px solid #f3f3f3;
     padding-top: 6rem;
     overflow-y: scroll;
     scrollbar-width: none;
+    background: var(--white);
+    transition: 0.5s;
 }
 
 .sidebar::-webkit-scrollbar {
     display: none;
+}
+
+.sidebar.show {
+    left: 0;
+}
+
+.sidebar-close {
+    position: absolute;
+    font-size: 1.4rem;
+    top: 5.5rem;
+    right: 5%;
+    cursor: pointer;
+}
+
+.sidebar-close:hover {
+    color: var(--saffron);
 }
