@@ -130,7 +130,6 @@ nav {
 
 @media screen and (max-width: 1100px) {
     .navigation {
-        padding: 0.3rem 0.9rem;
         position: absolute;
         top: 100%;
         right: -100%;
@@ -175,7 +174,8 @@ nav {
 @media screen and (max-width: 800px) and (orientation: portrait) {
 
     nav {
-        height: 5rem;
+        height: 4rem;
+        padding: 0.3rem 0.9rem;
     }
 
     .navigation {

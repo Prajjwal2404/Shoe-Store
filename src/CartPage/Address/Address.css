@@ -221,15 +221,19 @@
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
 
+    .form-container {
+        margin-top: 10rem;
+    }
+
     .wrapper-container {
-        width: 28rem;
+        width: 95vw;
     }
 
     .add-wrapper {
-        width: 28rem;
+        width: 95vw;
     }
 
     .saved-add-wrapper {
-        width: 28rem;
+        width: 95vw;
     }
 }

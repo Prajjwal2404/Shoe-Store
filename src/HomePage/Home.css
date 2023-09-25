@@ -165,6 +165,10 @@
         gap: 2rem;
     }
 
+    .outer-container {
+        padding-top: 4rem;
+    }
+
     .manualnav:not(:last-child) {
         margin-right: 10px;
     }

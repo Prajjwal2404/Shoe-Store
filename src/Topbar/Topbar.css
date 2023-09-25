@@ -6,3 +6,11 @@
     margin-bottom: 1.5rem;
     margin-top: 6rem;
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .topbar {
+        margin-top: 5rem;
+    }
+
+}

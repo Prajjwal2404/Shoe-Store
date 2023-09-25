@@ -215,15 +215,20 @@
         flex-direction: column;
         align-items: center;
         gap: 2rem;
+        padding-top: 8rem;
+    }
+
+    .back-btn {
+        top: 5rem;
     }
 
     .cover-div {
         position: initial;
-        width: 28rem;
+        width: 25rem;
     }
 
     .cover {
-        max-width: 28rem;
-        height: 16.33rem;
+        max-width: 25rem;
+        height: 14.29rem;
     }
 }

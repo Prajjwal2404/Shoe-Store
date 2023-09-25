@@ -110,7 +110,9 @@
         margin-left: 1rem;
         grid-template-columns: repeat(auto-fill, minmax(12rem, 12rem));
         padding-bottom: 2rem;
-        gap: 1rem;
+        gap: 0;
+        justify-content: space-between;
+        row-gap: 1rem;
     }
 
     .price del {
@@ -118,12 +120,12 @@
     }
 
     .img-div {
-        width: 11.5rem;
+        width: 10.5rem;
     }
 
     .card-img {
-        max-width: 11rem;
-        height: 6.42rem;
+        max-width: 10rem;
+        height: 5.4rem;
     }
 
     .card-details {

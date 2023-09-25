@@ -78,10 +78,15 @@
 
     .cart-nav {
         gap: 0.3rem;
+        padding-top: 6rem;
     }
 
     .cart-nav hr {
         width: 4rem;
+    }
+
+    .order-placed {
+        width: 95vw;
     }
 
 }

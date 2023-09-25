@@ -23,6 +23,7 @@
 @media screen and (max-width: 800px) and (orientation: portrait) {
     .sidebar {
         left: -15rem;
+        padding-top: 5rem;
     }
 
     .sidebar.show {
@@ -32,7 +33,7 @@
     .sidebar-close {
         position: absolute;
         font-size: 1.4rem;
-        top: 5.5rem;
+        top: 4.5rem;
         right: 5%;
         cursor: pointer;
     }
