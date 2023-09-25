@@ -101,48 +101,50 @@ export default function AddressEl() {
 
     return (
         <div className='form-container'>
-            <div className='add-wrapper' ref={el => ref.current[0] = el}>
-                <button className='autofill' onClick={autoFill}>Autofill using current location</button>
-                <Form className='add-form' method='post' replace>
-                    <div className="add-input-div">
-                        <input className='add-input' type="text" required name="fullName" placeholder='Name' />
-                    </div>
-                    <div className="add-input-div">
-                        <input className='add-input' type="number" required name="phone" placeholder='Phone Number' />
-                    </div>
-                    <div className="add-input-div">
-                        <input className='add-input' type="text" required name="street"
-                            placeholder='Area, Street, House no.' ref={el => ref.current[1] = el} />
-                    </div>
-                    <div className="add-input-div">
-                        <input className='add-input' type="number" required name="pincode" placeholder='Pincode'
-                            ref={el => ref.current[2] = el} />
-                    </div>
-                    <div className='state-city-div'>
-                        <div className="add-input-div small">
-                            <input className='add-input' type="text" required name="city" placeholder='City'
-                                ref={el => ref.current[3] = el} />
+            <div className='wrapper-container'>
+                <div className='add-wrapper' ref={el => ref.current[0] = el}>
+                    <button className='autofill' onClick={autoFill}>Autofill using current location</button>
+                    <Form className='add-form' method='post' replace>
+                        <div className="add-input-div">
+                            <input className='add-input' type="text" required name="fullName" placeholder='Name' />
                         </div>
-                        <div className="add-input-div small">
-                            <input className='add-input' type="text" required name="state" placeholder='State'
-                                ref={el => ref.current[4] = el} />
+                        <div className="add-input-div">
+                            <input className='add-input' type="number" required name="phone" placeholder='Phone Number' />
                         </div>
-                    </div>
-                    <div className="save-add">
-                        <label><input type="checkbox" name="save" />Save</label>
-                        <a className="saved-add" onClick={showhide}>Saved Addresses</a>
-                    </div>
-                    <button disabled={navigation.state === 'submitting'} type="submit" className="add-btn">
-                        {navigation.state === 'submitting' ? 'Proceeding...' : 'Proceed to Payment'}
-                    </button>
-                </Form>
-            </div>
-            <div className='saved-add-wrapper hidden' ref={el => ref.current[5] = el}>
-                <div className={`add-card-container ${addresses.length > 0 ? '' : 'empty'}`}>
-                    {addresses.length > 0 ? addresses : <h2>No saved Address</h2>}
+                        <div className="add-input-div">
+                            <input className='add-input' type="text" required name="street"
+                                placeholder='Area, Street, House no.' ref={el => ref.current[1] = el} />
+                        </div>
+                        <div className="add-input-div">
+                            <input className='add-input' type="number" required name="pincode" placeholder='Pincode'
+                                ref={el => ref.current[2] = el} />
+                        </div>
+                        <div className='state-city-div'>
+                            <div className="add-input-div small">
+                                <input className='add-input' type="text" required name="city" placeholder='City'
+                                    ref={el => ref.current[3] = el} />
+                            </div>
+                            <div className="add-input-div small">
+                                <input className='add-input' type="text" required name="state" placeholder='State'
+                                    ref={el => ref.current[4] = el} />
+                            </div>
+                        </div>
+                        <div className="save-add">
+                            <label><input type="checkbox" name="save" />Save</label>
+                            <a className="saved-add" onClick={showhide}>Saved Addresses</a>
+                        </div>
+                        <button disabled={navigation.state === 'submitting'} type="submit" className="add-btn">
+                            {navigation.state === 'submitting' ? 'Proceeding...' : 'Proceed to Payment'}
+                        </button>
+                    </Form>
                 </div>
-                <a className='new-add' onClick={showhide}>New Address</a>
-                <button className='saved-add-btn' onClick={proceed}>Proceed to Payment</button>
+                <div className='saved-add-wrapper hidden' ref={el => ref.current[5] = el}>
+                    <div className={`add-card-container ${addresses.length > 0 ? '' : 'empty'}`}>
+                        {addresses.length > 0 ? addresses : <h2>No saved Address</h2>}
+                    </div>
+                    <a className='new-add' onClick={showhide}>New Address</a>
+                    <button className='saved-add-btn' onClick={proceed}>Proceed to Payment</button>
+                </div>
             </div>
         </div>
     )

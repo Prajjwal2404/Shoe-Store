@@ -6,7 +6,7 @@ import HandleMedia from '../Functions/HandleMedia'
 
 export default function Listings({ data, isWishlist, removeWishlist, isMale, isFemale, isKids }) {
 
-  const isMobile = HandleMedia('800px')
+  const isMobile = HandleMedia('screen and (max-width: 800px) and (orientation: portrait)')
 
   const ref = useRef([])
 

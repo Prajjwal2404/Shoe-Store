@@ -251,3 +251,14 @@
 .login-register p a:hover {
     color: var(--saffron);
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .outerest {
+        top: 10%;
+    }
+
+    .wrapper {
+        max-width: 95vw;
+    }
+}

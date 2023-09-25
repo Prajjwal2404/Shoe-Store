@@ -47,25 +47,25 @@ export default function Login({ wrapper }) {
 
 
     function active() {
-        wrapper.current.classList.toggle('active');
+        wrapper.current[0].classList.toggle('active');
     }
 
     function activePass() {
-        wrapper.current.classList.toggle('active-pass');
+        wrapper.current[0].classList.toggle('active-pass');
     }
 
     function loginClose() {
-        wrapper.current.style.transform = "scale(0)";
+        wrapper.current[0].style.transform = "scale(0)";
         setTimeout(() => {
-            wrapper.current.style.display = "none"
-            wrapper.current.classList.remove('active', 'active-pass')
+            wrapper.current[0].style.display = "none"
+            wrapper.current[0].classList.remove('active', 'active-pass')
         }, 500);
     }
 
 
     return (
         <div className="outerest">
-            <div className="wrapper" ref={wrapper}>
+            <div className="wrapper" ref={el => wrapper.current[0] = el}>
                 <span className="icon-close" onClick={loginClose}><IoCloseOutline /></span>
                 <div className="form-box login">
                     <h2 className={login ? 'error' : ''}>Login</h2>

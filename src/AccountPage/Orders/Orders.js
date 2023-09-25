@@ -23,9 +23,9 @@ export default function Orders() {
                 return (
                     <div className='orders-div' key={index}>
                         <h2>{month.toUpperCase()}</h2>
-                        {orderItems.map(({ id, Sno, img, company, title, prevPrice, newPrice }, idx) => (
+                        {orderItems.map(({ id, img, company, title, prevPrice, newPrice }, idx) => (
                             <CartItem
-                                key={Sno}
+                                key={idx}
                                 id={id}
                                 img={img}
                                 company={company}

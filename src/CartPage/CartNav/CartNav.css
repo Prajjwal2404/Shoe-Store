@@ -73,3 +73,15 @@
     background: var(--darkgray);
     color: #eaeaea;
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .cart-nav {
+        gap: 0.3rem;
+    }
+
+    .cart-nav hr {
+        width: 4rem;
+    }
+
+}

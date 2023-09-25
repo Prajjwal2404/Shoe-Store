@@ -24,3 +24,13 @@
     color: var(--saffron);
     text-decoration: underline;
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .acc-nav {
+        justify-content: center;
+        padding-left: 0;
+        gap: 2rem;
+    }
+
+}

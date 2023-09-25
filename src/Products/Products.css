@@ -6,6 +6,7 @@
     gap: 2rem;
     margin-left: 19rem;
     padding-bottom: 1rem;
+    margin-right: 1rem;
 }
 
 .card {
@@ -14,6 +15,7 @@
     border: 2px solid #ededed;
     border-radius: 16px;
     position: relative;
+    overflow: hidden;
 }
 
 .card:hover {
@@ -101,4 +103,30 @@
 .in-bag {
     background: green;
     pointer-events: none;
+}
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+    .card-container {
+        margin-left: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(13rem, 13rem));
+        padding-bottom: 2rem;
+        gap: 1rem;
+    }
+
+    .price del {
+        display: none;
+    }
+
+    .img-div {
+        width: 11.5rem;
+    }
+
+    .card-img {
+        max-width: 11rem;
+        height: 6.42rem;
+    }
+
+    .card-details {
+        white-space: unset;
+    }
 }

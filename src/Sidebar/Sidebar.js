@@ -17,7 +17,7 @@ export default function Sidebar({ handleFilter, selectedCategory, selectedPrice,
         }
         if (isMobile) window.addEventListener('click', checkSidebar)
         return () => window.removeEventListener('click', checkSidebar)
-    }, [])
+    }, [isMobile])
 
     function sidebarClose() {
         myref.current[0].classList.remove('show')

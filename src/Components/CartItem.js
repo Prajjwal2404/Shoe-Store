@@ -2,8 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { IoMdCloseCircle } from 'react-icons/io'
 import Select from './Select'
+import HandleMedia from '../Functions/HandleMedia'
 
 export default function CartItem(props) {
+
+    const isMobile = HandleMedia('screen and (max-width: 800px) and (orientation: portrait)')
+
     return (
         <Link to={`/details/${props.id}`}>
             <section className='cart-card'>
@@ -19,6 +23,10 @@ export default function CartItem(props) {
                     <div className='cart-card-details'>
                         <h3>{props.title}</h3>
                     </div>
+                    {isMobile && <div className='cart-card-priceM'>
+                        <p>${props.newPrice}.00</p>
+                        <del>${props.prevPrice}.00</del>
+                    </div>}
                     {props.isPlaced ?
                         <div className='order-selection-div'>
                             <p>SIZE (UK): {props.size}</p>
@@ -31,12 +39,12 @@ export default function CartItem(props) {
                                 handleClick={props.updateQuantity} />
                         </div>}
                 </section>
-                <section className='cart-price-sec'>
+                {!isMobile && <section className='cart-price-sec'>
                     <div className='cart-card-price'>
                         <p>${props.newPrice}.00</p>
                         <del>${props.prevPrice}.00</del>
                     </div>
-                </section>
+                </section>}
             </section>
         </Link>
     )

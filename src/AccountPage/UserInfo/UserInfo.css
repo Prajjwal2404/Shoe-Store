@@ -40,3 +40,12 @@
     background: var(--darkgray);
     color: #eaeaea;
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .user-info-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+}

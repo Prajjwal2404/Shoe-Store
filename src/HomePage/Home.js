@@ -30,7 +30,7 @@ export default function Home() {
                 if (counter > 4) {
                     counter = 0
                 }
-                rd.current[counter].checked = true
+                setSlideShow(counter.toString())
             }
         }
         const interval = setInterval(slider, 5000)

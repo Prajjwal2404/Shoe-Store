@@ -20,18 +20,24 @@
     display: none;
 }
 
-.sidebar.show {
-    left: 0;
-}
+@media screen and (max-width: 800px) and (orientation: portrait) {
+    .sidebar {
+        left: -15rem;
+    }
 
-.sidebar-close {
-    position: absolute;
-    font-size: 1.4rem;
-    top: 5.5rem;
-    right: 5%;
-    cursor: pointer;
-}
+    .sidebar.show {
+        left: 0;
+    }
 
-.sidebar-close:hover {
-    color: var(--saffron);
+    .sidebar-close {
+        position: absolute;
+        font-size: 1.4rem;
+        top: 5.5rem;
+        right: 5%;
+        cursor: pointer;
+    }
+
+    .sidebar-close:hover {
+        color: var(--saffron);
+    }
 }

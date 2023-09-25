@@ -11,12 +11,12 @@ export async function loader() {
 
 export default function LoginPage() {
 
-    const wrapper = useRef();
+    const wrapper = useRef([]);
 
     function loginPopup() {
         window.scrollTo(0, 0);
-        wrapper.current.style.display = "flex";
-        setTimeout(() => wrapper.current.style.transform = "scale(1)", 100);
+        wrapper.current[0].style.display = "flex";
+        setTimeout(() => wrapper.current[0].style.transform = "scale(1)", 100);
     }
 
     const style = {

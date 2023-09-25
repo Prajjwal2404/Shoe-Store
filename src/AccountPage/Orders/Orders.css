@@ -28,3 +28,13 @@
 .order-selection-div p {
     white-space: nowrap;
 }
+
+@media screen and (max-width: 800px) and (orientation: portrait) {
+
+    .orders-container {
+        margin-left: 0;
+        width: 100%;
+        align-items: center;
+    }
+
+}

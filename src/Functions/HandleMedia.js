@@ -4,7 +4,7 @@ export default function HandleMedia(screen) {
     const [matches, setMatches] = useState(false);
 
     useEffect(() => {
-        const query = `screen and (max-width: ${screen}) and (orientation: portrait)`;
+        const query = screen;
         const media = window.matchMedia(query);
         if (media.matches !== matches) {
             setMatches(media.matches);
