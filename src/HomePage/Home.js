@@ -1,9 +1,10 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react'
-import './Home.css'
 import { Await, defer, useLoaderData, useOutletContext } from 'react-router-dom'
 import { data } from '../DB/FirebaseConfig'
 import Loading from '../Loading/Loading'
 import Card from '../Components/Card'
+import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
+import './Home.css'
 
 export function loader() {
     return defer({ dataSet: data() })
@@ -15,6 +16,7 @@ export default function Home() {
     const rd = useRef([])
     const outletContext = useOutletContext()
     const [slideShow, setSlideShow] = useState('0')
+    const [stop, setStop] = useState(false)
 
     var counter = 0
     useEffect(() => {
@@ -34,8 +36,29 @@ export default function Home() {
             }
         }
         const interval = setInterval(slider, 5000)
+        if (stop) clearInterval(interval)
         return () => clearInterval(interval)
-    }, [])
+    }, [stop])
+
+    function incSlideShow() {
+        setStop(true)
+        setSlideShow(prevSlideShow => {
+            var num = parseInt(prevSlideShow)
+            num++
+            if (num > 4) num = 0
+            return num.toString()
+        })
+    }
+
+    function decSlideShow() {
+        setStop(true)
+        setSlideShow(prevSlideShow => {
+            var num = parseInt(prevSlideShow)
+            num--
+            if (num < 0) num = 4
+            return num.toString()
+        })
+    }
 
     function content(dataSetLoaded) {
 
@@ -112,6 +135,9 @@ export default function Home() {
                                     value='3' onChange={handleChange} checked={slideShow === '3'} />
                                 <input type='radio' name='radiobtn' id='radio5' ref={el => rd.current[4] = el}
                                     value='4' onChange={handleChange} checked={slideShow === '4'} />
+
+                                <IoIosArrowForward className='arrow-icon fwd' onClick={incSlideShow} />
+                                <IoIosArrowBack className='arrow-icon back' onClick={decSlideShow} />
 
                                 <div className='slide first'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg1.jpeg?alt=media&token=23845229-387e-472a-9df0-b46b215b2ad2' className='img' />

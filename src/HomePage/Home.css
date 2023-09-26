@@ -49,6 +49,29 @@
     object-position: center;
 }
 
+.arrow-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--white);
+    cursor: pointer;
+    font-size: 1.6rem;
+    border-radius: 50%;
+    padding: 0.2rem;
+}
+
+.arrow-icon.fwd {
+    right: 0.5%;
+}
+
+.arrow-icon.back {
+    left: 0.5%;
+}
+
+.arrow-icon:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
 .navbackground {
     position: absolute;
     width: 100%;
@@ -146,6 +169,14 @@
 
     .outer-container {
         padding-top: 4rem;
+    }
+
+    .arrow-icon {
+        font-size: 1.5rem;
+    }
+
+    .manualnav {
+        padding: 1.5px;
     }
 
     .manualnav:not(:last-child) {
