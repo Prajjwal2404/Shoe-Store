@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BiSolidSortAlt } from "react-icons/bi";
 import SortItem from '../../Components/SortItem';
 import './Sort.css'
@@ -13,24 +13,29 @@ export default function Sort({ handleSort, selected }) {
         dropDown();
     }
 
-    let close = false
+    const [close, setClose] = useState(false)
 
     function dropDown() {
         if (close) {
             options.current[1].style.height = '0'
-            close = false
+            setClose(false)
         }
         else {
             options.current[1].style.height = '8.5rem'
-            close = true
+            setClose(true)
         }
     }
 
-    window.addEventListener('click', (event) => {
-        if (close && !options.current[0].contains(event.target) && !options.current[1].contains(event.target)) {
-            dropDown()
+    useEffect(() => {
+        function checkSort(event) {
+            if (close && !options.current[0].contains(event.target) && !options.current[1].contains(event.target)) {
+                dropDown()
+            }
         }
-    })
+        window.addEventListener('click', checkSort)
+        return () => window.removeEventListener('click', checkSort)
+    }, [close])
+
 
     return (
         <div className='sort-div'>
