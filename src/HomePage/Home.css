@@ -36,7 +36,7 @@
 }
 
 .slide {
-    width: 1%;
+    width: 20%;
     height: 100%;
     transition: 1s;
 }
@@ -80,19 +80,19 @@
 }
 
 #radio2:checked~.first {
-    margin-left: -1%;
+    margin-left: -20%;
 }
 
 #radio3:checked~.first {
-    margin-left: -2%;
+    margin-left: -40%;
 }
 
 #radio4:checked~.first {
-    margin-left: -3%;
+    margin-left: -60%;
 }
 
 #radio5:checked~.first {
-    margin-left: -4%;
+    margin-left: -80%;
 }
 
 #radio1:checked~.navbackground .lbl1 {
@@ -113,26 +113,6 @@
 
 #radio5:checked~.navbackground .lbl5 {
     background: white;
-}
-
-#radio1:checked~.first {
-    width: 20%;
-}
-
-#radio2:checked~.second {
-    width: 20%;
-}
-
-#radio3:checked~.third {
-    width: 20%;
-}
-
-#radio4:checked~.fourth {
-    width: 20%;
-}
-
-#radio5:checked~.fifth {
-    width: 20%;
 }
 
 .more-div {
@@ -171,5 +151,13 @@
 
     .manualnav:not(:last-child) {
         margin-right: 10px;
+    }
+
+    .more-div h2 {
+        margin-left: 1.5rem;
+    }
+
+    .more-card-div {
+        padding: 1rem;
     }
 }

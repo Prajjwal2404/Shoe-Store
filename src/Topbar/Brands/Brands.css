@@ -50,8 +50,10 @@
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
     .brands {
-        margin-left: 1rem;
+        margin-left: 0rem;
         height: 2.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     .filter-icon {

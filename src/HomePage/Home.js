@@ -116,16 +116,16 @@ export default function Home() {
                                 <div className='slide first'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg1.jpeg?alt=media&token=23845229-387e-472a-9df0-b46b215b2ad2' className='img' />
                                 </div>
-                                <div className='slide second'>
+                                <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg2.jpg?alt=media&token=383563fb-602e-42f2-a6c6-0de812483540' className='img' />
                                 </div>
-                                <div className='slide third'>
+                                <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg3.jpeg?alt=media&token=16e6cd84-33e6-4a03-a0c1-307f25ebebda' className='img' />
                                 </div>
-                                <div className='slide fourth'>
+                                <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg4.jpeg?alt=media&token=37f4e597-2453-4113-a465-8b5b29d32950' className='img' />
                                 </div>
-                                <div className='slide fifth'>
+                                <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg5.jpeg?alt=media&token=0597b75e-da0c-4536-961d-9cde713712b2' className='img' />
                                 </div>
 
