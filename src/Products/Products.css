@@ -107,13 +107,12 @@
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
     .card-container {
-        margin-left: 0;
-        margin-right: 0;
-        grid-template-columns: repeat(auto-fill, minmax(12rem, 12rem));
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        grid-template-columns: minmax(12rem, 14rem) repeat(auto-fill, minmax(12rem, 14rem));
         padding-bottom: 2rem;
-        gap: 0;
         justify-content: space-evenly;
-        row-gap: 1rem;
+        gap: 1rem;
     }
 
     .card {

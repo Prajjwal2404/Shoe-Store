@@ -226,14 +226,14 @@
     }
 
     .wrapper-container {
-        width: 95vw;
+        max-width: 95vw;
     }
 
     .add-wrapper {
-        width: 95vw;
+        max-width: 95vw;
     }
 
     .saved-add-wrapper {
-        width: 95vw;
+        max-width: 95vw;
     }
 }
