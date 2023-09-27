@@ -80,7 +80,7 @@
     height: 45px;
     width: 45px;
     background: var(--darkgray);
-    font-size: 2em;
+    font-size: 2rem;
     color: #dadada;
     display: flex;
     justify-content: center;
@@ -101,13 +101,13 @@
 }
 
 .form-box h2 {
-    font-size: 2em;
+    font-size: 2rem;
     color: var(--darkgray);
     text-align: center;
 }
 
 .form-box h4 {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: red;
     text-align: center;
 }
@@ -129,7 +129,7 @@
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    font-size: 1em;
+    font-size: 1rem;
     color: var(--darkgray);
     font-weight: 500;
     pointer-events: none;
@@ -156,14 +156,14 @@
     right: 8px;
     top: 25%;
     transform: translateY(-50%);
-    font-size: 1.2em;
+    font-size: 1.2rem;
     color: var(--darkgray);
     line-height: 57px;
     margin-top: 15px;
 }
 
 .remember-forgot {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: var(--darkgray);
     font-weight: 500;
     margin: 15px 0 15px;
@@ -200,7 +200,7 @@
     outline: none;
     background: transparent;
     border-radius: 6px;
-    font-size: 1em;
+    font-size: 1rem;
     color: var(--darkgray);
     font-weight: 600;
     cursor: pointer;
@@ -213,7 +213,7 @@
 }
 
 .login-register {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: var(--darkgray);
     text-align: center;
     font-weight: 500;

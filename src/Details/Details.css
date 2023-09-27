@@ -36,6 +36,7 @@
     max-width: 48rem;
     padding: 3rem;
     transform: scaleX(-1);
+    object-fit: contain;
 }
 
 .info {

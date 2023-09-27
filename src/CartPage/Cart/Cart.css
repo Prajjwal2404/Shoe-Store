@@ -54,6 +54,7 @@
 .cart-img {
     max-width: 12rem;
     height: 7.125rem;
+    object-fit: contain;
 }
 
 .cart-details-sec {

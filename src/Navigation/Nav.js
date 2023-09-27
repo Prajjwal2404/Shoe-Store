@@ -3,7 +3,8 @@ import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import { BiCartAlt } from "react-icons/bi";
 import { GiRunningShoe } from "react-icons/gi";
 import { FiSearch } from "react-icons/fi";
-import { IoMenu, IoClose, IoChevronBack } from "react-icons/io5"
+import { IoMenu, IoClose } from "react-icons/io5"
+import { IoIosArrowForward } from 'react-icons/io'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { auth, user } from '../DB/FirebaseConfig';
 import { onAuthStateChanged } from "firebase/auth"
@@ -148,7 +149,7 @@ export default function Nav() {
                     </>}
                 </div>
                 <div className='searchDiv' ref={el => wrapper.current[4] = el}>
-                    {isMobile && <IoChevronBack className='close-search' />}
+                    {isMobile && <IoIosArrowForward className='close-search' />}
                     <input
                         id='searchbox'
                         type='text'
