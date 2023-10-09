@@ -16,6 +16,11 @@ export default function Orders() {
             dataSet.forEach(item => {
                 if (!months.includes(item.month)) months.push(item.month)
             })
+            months = months.sort((a, b) => {
+                const dateA = new Date(a + '1')
+                const dateB = new Date(b + '1')
+                return dateB - dateA
+            })
             const ordersArr = await Promise.all(months.map(async (month, index) => {
                 var monthOrders = dataSet.filter(item => item.month === month)
                 monthOrders = monthOrders.sort((a, b) => b.timeStamp - a.timeStamp)

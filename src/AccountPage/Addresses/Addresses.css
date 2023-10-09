@@ -1,6 +1,6 @@
 .adds-card-container {
     width: fit-content;
-    margin-top: 12rem;
+    margin-top: 2rem;
     margin-left: 3rem;
     display: flex;
     flex-direction: column;
@@ -45,7 +45,6 @@
         margin-left: 0;
         align-items: center;
         width: 100%;
-        margin-top: 11rem;
     }
 
 }

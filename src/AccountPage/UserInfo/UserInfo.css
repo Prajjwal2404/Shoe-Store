@@ -1,6 +1,6 @@
 .user-info-container {
     width: fit-content;
-    margin-top: 12rem;
+    margin-top: 2rem;
     margin-left: 3rem;
     display: flex;
     flex-direction: column;
@@ -46,7 +46,6 @@
     .user-info-container {
         margin-left: auto;
         margin-right: auto;
-        margin-top: 11rem;
     }
 
 }

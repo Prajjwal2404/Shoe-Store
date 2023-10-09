@@ -3,7 +3,10 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding-bottom: 1rem;
     padding-top: 7rem;
+    position: fixed;
+    top: 0;
     z-index: 900;
     gap: 1rem;
     border: none;
@@ -78,7 +81,7 @@
 
     .cart-nav {
         gap: 0.3rem;
-        padding-bottom: 1rem;
+        position: initial;
     }
 
     .cart-nav hr {

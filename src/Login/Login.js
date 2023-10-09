@@ -1,10 +1,7 @@
 import React from 'react'
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import HandleAuth from '../Functions/HandleAuth';
-import {
-    IoMailOutline, IoCloseOutline, IoLockClosedOutline,
-    IoPersonOutline, IoRefreshCircleOutline, IoShieldOutline
-} from 'react-icons/io5'
+import { IoMailOutline, IoCloseOutline, IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5'
 import './Login.css'
 
 export async function action({ request }) {

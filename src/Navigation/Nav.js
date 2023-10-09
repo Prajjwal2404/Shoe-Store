@@ -125,7 +125,7 @@ export default function Nav() {
 
     return (
         <>
-            <nav>
+            <nav className='main-nav'>
                 <div className='logo-div' ref={el => wrapper.current[3] = el}>
                     <Link to={'/'}><GiRunningShoe className='logo-icon' /></Link>
                     <h2><big>S</big>hoe <big>S</big>tore</h2>

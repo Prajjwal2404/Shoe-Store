@@ -222,7 +222,7 @@
 @media screen and (max-width: 800px) and (orientation: portrait) {
 
     .form-container {
-        margin-top: 10rem;
+        margin-top: 2rem;
     }
 
     .wrapper-container {
