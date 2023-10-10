@@ -21,6 +21,7 @@ import NotFound from './Pages/NotFoundPage';
 import Error from './Pages/ErrorPage';
 import { action as loginAction } from './Login/Login';
 import { action as addressAction } from './CartPage/Address/Address';
+import { action as addressesAction } from './AccountPage/Addresses/Addresses';
 import { loader as HomeLoader } from './HomePage/Home';
 import { loader as MenLoader } from './Pages/MenPage';
 import { loader as WomenLoader } from './Pages/WomenPage';
@@ -50,7 +51,7 @@ export default function App() {
             </Route>
             <Route path='account' element={<AccountNav />} loader={AccountLoader} >
                 <Route index element={<UserInfo />} />
-                <Route path='addresses' element={<Addresses />} />
+                <Route path='addresses' element={<Addresses />} action={addressesAction} />
                 <Route path='orders' element={<Orders />} />
             </Route>
             <Route path='login' element={<LoginPage />} action={loginAction} loader={LoginLoader} />

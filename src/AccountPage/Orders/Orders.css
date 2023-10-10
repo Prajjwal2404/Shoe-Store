@@ -1,5 +1,5 @@
 .orders-container {
-    margin-top: 2rem;
+    margin-top: 11rem;
     margin-left: 3rem;
     margin-bottom: 1rem;
     display: flex;
@@ -34,6 +34,7 @@
 
     .orders-container {
         margin-left: 0;
+        margin-top: 2rem;
         width: 100%;
         align-items: center;
     }
