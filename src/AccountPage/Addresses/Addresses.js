@@ -54,7 +54,7 @@ export default function Addresses() {
         }
     }, [action])
 
-    const addressesCardArr = addresses.map((item, idx) =>
+    var addressesCardArr = addresses.map((item, idx) =>
     (<AddressesCard
         key={idx}
         fullName={item.fullName}
@@ -67,6 +67,8 @@ export default function Addresses() {
         remove={remove}
         edit={editAddress} />
     ))
+
+    addressesCardArr.reverse()
 
     async function remove(event, idx) {
         event.stopPropagation()
