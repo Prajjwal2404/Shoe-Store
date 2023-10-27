@@ -3,9 +3,9 @@
   "name": "Shoe Store",
   "icons": [
     {
-      "src": "running-shoe.png",
-      "type": "image/png",
-      "sizes": "512x512",
+      "src": "running-shoe.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
       "purpose": "any"
     }
   ],

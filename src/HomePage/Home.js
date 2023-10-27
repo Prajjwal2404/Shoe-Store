@@ -3,7 +3,6 @@ import { Await, defer, useLoaderData, useOutletContext } from 'react-router-dom'
 import { data } from '../DB/FirebaseConfig'
 import Loading from '../Loading/Loading'
 import Card from '../Components/Card'
-import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 import './Home.css'
 
 export function loader() {
@@ -15,7 +14,7 @@ export default function Home() {
     const dataSetPromise = useLoaderData()
     const rd = useRef([])
     const outletContext = useOutletContext()
-    const [slideShow, setSlideShow] = useState('0')
+    const [slideShow, setSlideShow] = useState({ value: 0, scroll: false })
     const [stop, setStop] = useState(false)
 
     var counter = 0
@@ -23,7 +22,7 @@ export default function Home() {
         outletContext.getCartItems()
         function slider() {
             if (rd.current.length > 0) {
-                for (let i = 0; i < rd.current.length; i++) {
+                for (let i = 0; i < rd.current.length - 2; i++) {
                     if (rd.current[i].checked === true) {
                         counter = i + 1
                         break
@@ -32,7 +31,8 @@ export default function Home() {
                 if (counter > 4) {
                     counter = 0
                 }
-                setSlideShow(counter.toString())
+                rd.current[5].scrollLeft = rd.current[6].offsetWidth * counter
+                setSlideShow({ value: counter, scroll: false })
             }
         }
         const interval = setInterval(slider, 5000)
@@ -40,30 +40,32 @@ export default function Home() {
         return () => clearInterval(interval)
     }, [stop])
 
-    function incSlideShow() {
-        setStop(true)
-        setSlideShow(prevSlideShow => {
-            var num = parseInt(prevSlideShow)
-            num++
-            if (num > 4) num = 0
-            return num.toString()
-        })
-    }
-
-    function decSlideShow() {
-        setStop(true)
-        setSlideShow(prevSlideShow => {
-            var num = parseInt(prevSlideShow)
-            num--
-            if (num < 0) num = 4
-            return num.toString()
-        })
-    }
+    useEffect(() => {
+        var timer = null
+        function scrollDetect() {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            timer = setTimeout(() => {
+                if (slideShow.scroll) {
+                    setSlideShow(prevSlideShow => ({
+                        ...prevSlideShow,
+                        value: Math.round(rd.current[5].scrollLeft / rd.current[6].offsetWidth)
+                    }))
+                    setStop(true)
+                }
+                else setSlideShow(prevSlideShow => ({ ...prevSlideShow, scroll: true }))
+            }, 50)
+        }
+        if (rd.current.length > 0) rd.current[5].addEventListener('scroll', scrollDetect)
+        return () => rd.current[5]?.removeEventListener('scroll', scrollDetect)
+    }, [slideShow])
 
     function content(dataSetLoaded) {
 
         function handleChange(event) {
-            setSlideShow(event.target.value)
+            rd.current[5].scrollLeft = rd.current[6].offsetWidth * event.target.value
+            setSlideShow({ value: parseInt(event.target.value), scroll: false })
         }
 
         const fourtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === 150)
@@ -123,23 +125,20 @@ export default function Home() {
             <div className='home-container'>
                 <div className='outer-container'>
                     <div className='outer'>
-                        <div className='slider'>
+                        <div className='slider' ref={el => rd.current[5] = el}>
                             <div className='slides'>
                                 <input type='radio' name='radiobtn' id='radio1' ref={el => rd.current[0] = el}
-                                    value='0' onChange={handleChange} checked={slideShow === '0'} />
+                                    value={0} onChange={handleChange} checked={slideShow.value === 0} />
                                 <input type='radio' name='radiobtn' id='radio2' ref={el => rd.current[1] = el}
-                                    value='1' onChange={handleChange} checked={slideShow === '1'} />
+                                    value={1} onChange={handleChange} checked={slideShow.value === 1} />
                                 <input type='radio' name='radiobtn' id='radio3' ref={el => rd.current[2] = el}
-                                    value='2' onChange={handleChange} checked={slideShow === '2'} />
+                                    value={2} onChange={handleChange} checked={slideShow.value === 2} />
                                 <input type='radio' name='radiobtn' id='radio4' ref={el => rd.current[3] = el}
-                                    value='3' onChange={handleChange} checked={slideShow === '3'} />
+                                    value={3} onChange={handleChange} checked={slideShow.value === 3} />
                                 <input type='radio' name='radiobtn' id='radio5' ref={el => rd.current[4] = el}
-                                    value='4' onChange={handleChange} checked={slideShow === '4'} />
+                                    value={4} onChange={handleChange} checked={slideShow.value === 4} />
 
-                                <IoIosArrowForward className='arrow-icon fwd' onClick={incSlideShow} />
-                                <IoIosArrowBack className='arrow-icon back' onClick={decSlideShow} />
-
-                                <div className='slide first'>
+                                <div className='slide' ref={el => rd.current[6] = el}>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg1.jpeg?alt=media&token=23845229-387e-472a-9df0-b46b215b2ad2' className='img' />
                                 </div>
                                 <div className='slide'>

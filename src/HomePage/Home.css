@@ -16,13 +16,19 @@
 .outer {
     height: 40vw;
     width: 100%;
+    position: relative;
 }
 
 .slider {
     height: 100%;
     width: 100%;
-    position: relative;
-    overflow: hidden;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
 }
 
 .slides {
@@ -38,38 +44,14 @@
 .slide {
     width: 20%;
     height: 100%;
-    transition: 1s;
+    scroll-snap-align: center;
 }
 
 .img {
     width: 100%;
     height: 100%;
-    transition: 1s;
     object-fit: cover;
     object-position: center;
-}
-
-.arrow-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--white);
-    cursor: pointer;
-    font-size: 1.6rem;
-    border-radius: 50%;
-    padding: 0.2rem;
-}
-
-.arrow-icon.fwd {
-    right: 0.5%;
-}
-
-.arrow-icon.back {
-    left: 0.5%;
-}
-
-.arrow-icon:hover {
-    background: rgba(0, 0, 0, 0.5);
 }
 
 .navbackground {
@@ -95,26 +77,6 @@
 
 .manualnav:hover {
     background-color: white;
-}
-
-#radio1:checked~.first {
-    margin-left: 0%;
-}
-
-#radio2:checked~.first {
-    margin-left: -20%;
-}
-
-#radio3:checked~.first {
-    margin-left: -40%;
-}
-
-#radio4:checked~.first {
-    margin-left: -60%;
-}
-
-#radio5:checked~.first {
-    margin-left: -80%;
 }
 
 #radio1:checked~.navbackground .lbl1 {
@@ -171,8 +133,8 @@
         padding-top: 4rem;
     }
 
-    .arrow-icon {
-        font-size: 1.5rem;
+    .navbackground {
+        top: 92%;
     }
 
     .manualnav {
