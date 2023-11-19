@@ -149,7 +149,7 @@ export default function Addresses() {
             </div>
             <div className='adds-outerest'>
                 <div className='adds-wrapper' ref={ref}>
-                    <IoCloseOutline className='adds-close' onClick={closeAddress} />
+                    <span className='adds-close' onClick={closeAddress}><IoCloseOutline /></span>
                     <button className='adds-autofill' onClick={autoFill}>Autofill using current location</button>
                     <Form className='adds-form' method='post' replace>
                         <input className='id-input' type='number' name='idx' value={addressData.idx}

@@ -23,8 +23,10 @@
     height: 100%;
     width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
 }
 
 .slider::-webkit-scrollbar {
@@ -32,7 +34,7 @@
 }
 
 .slides {
-    width: 500%;
+    width: 700%;
     height: 100%;
     display: flex;
 }
@@ -42,9 +44,10 @@
 }
 
 .slide {
-    width: 20%;
+    width: calc(100% / 7);
     height: 100%;
     scroll-snap-align: center;
+    scroll-snap-stop: always;
 }
 
 .img {
@@ -68,7 +71,7 @@
     border-radius: 50%;
     padding: 2.5px;
     cursor: pointer;
-    transition: 0.5s;
+    transition: 0.25s;
 }
 
 .manualnav:not(:last-child) {

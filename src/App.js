@@ -37,19 +37,19 @@ export default function App() {
 
     const router = createBrowserRouter(createRoutesFromElements(
         <Route path='/' element={<Nav />} action={loginAction} errorElement={<Error />}>
-            <Route index element={<Home />} loader={HomeLoader} />
-            <Route path='men' element={<Men />} loader={MenLoader} />
-            <Route path='women' element={<Women />} loader={WomenLoader} />
-            <Route path='kids' element={<Kids />} loader={KidsLoader} />
-            <Route path='search' element={<Search />} loader={SearchLoader} />
+            <Route index element={<Home />} loader={HomeLoader} errorElement={<Error />} />
+            <Route path='men' element={<Men />} loader={MenLoader} errorElement={<Error />} />
+            <Route path='women' element={<Women />} loader={WomenLoader} errorElement={<Error />} />
+            <Route path='kids' element={<Kids />} loader={KidsLoader} errorElement={<Error />} />
+            <Route path='search' element={<Search />} loader={SearchLoader} errorElement={<Error />} />
             <Route path='details/:id' element={<Details />} loader={DetailLoader} errorElement={<Error />} />
-            <Route path='wishlist' element={<WishList />} loader={WishlistLoader} />
-            <Route path='cart' element={<CartNav />} loader={CartLoader} >
+            <Route path='wishlist' element={<WishList />} loader={WishlistLoader} errorElement={<Error />} />
+            <Route path='cart' element={<CartNav />} loader={CartLoader} errorElement={<Error />} >
                 <Route index element={<CartEl />} />
                 <Route path='address' element={<AddressEl />} action={addressAction} />
                 <Route path='payment' element={<PaymentEl />} />
             </Route>
-            <Route path='account' element={<AccountNav />} loader={AccountLoader} >
+            <Route path='account' element={<AccountNav />} loader={AccountLoader} errorElement={<Error />} >
                 <Route index element={<UserInfo />} />
                 <Route path='addresses' element={<Addresses />} action={addressesAction} />
                 <Route path='orders' element={<Orders />} />

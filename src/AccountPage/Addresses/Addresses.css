@@ -72,7 +72,7 @@
 }
 
 .adds-wrapper {
-    width: 30rem;
+    width: min(30rem, 95vw);
     transition: 0.5s;
     transform: scale(0);
     display: none;
@@ -93,7 +93,7 @@
     height: 45px;
     width: 45px;
     background: var(--darkgray);
-    padding: 0.5rem;
+    font-size: 2rem;
     color: #dadada;
     display: flex;
     justify-content: center;
@@ -105,7 +105,7 @@
 }
 
 .adds-close:hover {
-    box-shadow: 0 0 15px var(--darkgray);
+    box-shadow: -1px 1px 10px var(--darkgray);
 }
 
 .adds-autofill {
@@ -201,9 +201,4 @@
     .adds-outerest {
         top: 10%;
     }
-
-    .adds-wrapper {
-        max-width: 95vw;
-    }
-
 }

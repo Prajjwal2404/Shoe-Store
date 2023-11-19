@@ -12,7 +12,7 @@
 
 .wrapper {
     position: relative;
-    width: 400px;
+    width: min(400px, 95vw);
     height: 440px;
     background-color: #ededed;
     border-radius: 20px;
@@ -234,9 +234,5 @@
 
     .outerest {
         top: 10%;
-    }
-
-    .wrapper {
-        max-width: 95vw;
     }
 }

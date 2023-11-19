@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Await, defer, useLoaderData, useOutletContext } from 'react-router-dom'
 import { data } from '../DB/FirebaseConfig'
 import Loading from '../Loading/Loading'
@@ -14,24 +14,46 @@ export default function Home() {
     const dataSetPromise = useLoaderData()
     const rd = useRef([])
     const outletContext = useOutletContext()
-    const [slideShow, setSlideShow] = useState({ value: 0, scroll: false })
-    const [stop, setStop] = useState(false)
+    const [slideShow, setSlideShow] = useState({ value: 0, scroll: true })
+    const [stop, setStop] = useState(true)
 
-    var counter = 0
     useEffect(() => {
+        async function fetchData() {
+            await dataSetPromise.dataSet
+            setStop(false)
+        }
+        fetchData()
+    }, [])
+
+    useLayoutEffect(() => {
+        if (!stop) {
+            rd.current[5]?.scrollTo({ left: rd.current[5].offsetWidth, behavior: 'instant' })
+            setSlideShow(prevSlideShow => ({ ...prevSlideShow, scroll: false }))
+        }
+    }, [stop])
+
+    useEffect(() => {
+        var counter = 0
         outletContext.getCartItems()
         function slider() {
             if (rd.current.length > 0) {
-                for (let i = 0; i < rd.current.length - 2; i++) {
+                for (let i = 0; i < rd.current.length - 1; i++) {
                     if (rd.current[i].checked === true) {
                         counter = i + 1
                         break
                     }
                 }
+                rd.current[5].scrollLeft = rd.current[5].offsetWidth * (counter + 1)
                 if (counter > 4) {
                     counter = 0
+                    setTimeout(() => {
+                        setSlideShow({ value: counter, scroll: false })
+                        setTimeout(() => rd.current[5].scrollTo({
+                            left: rd.current[5].offsetWidth,
+                            behavior: 'instant'
+                        }), 50)
+                    }, 2450)
                 }
-                rd.current[5].scrollLeft = rd.current[6].offsetWidth * counter
                 setSlideShow({ value: counter, scroll: false })
             }
         }
@@ -48,23 +70,32 @@ export default function Home() {
             }
             timer = setTimeout(() => {
                 if (slideShow.scroll) {
+                    if (Math.round(rd.current[5].scrollLeft) >= Math.round(rd.current[5].offsetWidth * 6)) {
+                        rd.current[5].scrollTo({ left: rd.current[5].offsetWidth, behavior: 'instant' })
+                    }
+                    else if (Math.round(rd.current[5].scrollLeft) === 0) {
+                        rd.current[5].scrollTo({ left: (rd.current[5].offsetWidth * 5), behavior: 'instant' })
+                    }
+                    var scrollPostion = Math.round(rd.current[5].scrollLeft / rd.current[5].offsetWidth) - 1
+                    if (scrollPostion > 4) scrollPostion = 0
+                    else if (scrollPostion < 0) scrollPostion = 4
                     setSlideShow(prevSlideShow => ({
                         ...prevSlideShow,
-                        value: Math.round(rd.current[5].scrollLeft / rd.current[6].offsetWidth)
+                        value: scrollPostion
                     }))
                     setStop(true)
                 }
                 else setSlideShow(prevSlideShow => ({ ...prevSlideShow, scroll: true }))
             }, 50)
         }
-        if (rd.current.length > 0) rd.current[5].addEventListener('scroll', scrollDetect)
+        rd.current[5]?.addEventListener('scroll', scrollDetect)
         return () => rd.current[5]?.removeEventListener('scroll', scrollDetect)
     }, [slideShow])
 
     function content(dataSetLoaded) {
 
         function handleChange(event) {
-            rd.current[5].scrollLeft = rd.current[6].offsetWidth * event.target.value
+            rd.current[5].scrollLeft = rd.current[5].offsetWidth * (parseInt(event.target.value) + 1)
             setSlideShow({ value: parseInt(event.target.value), scroll: false })
         }
 
@@ -138,7 +169,10 @@ export default function Home() {
                                 <input type='radio' name='radiobtn' id='radio5' ref={el => rd.current[4] = el}
                                     value={4} onChange={handleChange} checked={slideShow.value === 4} />
 
-                                <div className='slide' ref={el => rd.current[6] = el}>
+                                <div className='slide'>
+                                    <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg5.jpeg?alt=media&token=0597b75e-da0c-4536-961d-9cde713712b2' className='img' />
+                                </div>
+                                <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg1.jpeg?alt=media&token=23845229-387e-472a-9df0-b46b215b2ad2' className='img' />
                                 </div>
                                 <div className='slide'>
@@ -152,6 +186,9 @@ export default function Home() {
                                 </div>
                                 <div className='slide'>
                                     <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg5.jpeg?alt=media&token=0597b75e-da0c-4536-961d-9cde713712b2' className='img' />
+                                </div>
+                                <div className='slide'>
+                                    <img src='https://firebasestorage.googleapis.com/v0/b/shoe-store-160b2.appspot.com/o/home%2Fimg1.jpeg?alt=media&token=23845229-387e-472a-9df0-b46b215b2ad2' className='img' />
                                 </div>
 
                                 <div className='navbackground'>

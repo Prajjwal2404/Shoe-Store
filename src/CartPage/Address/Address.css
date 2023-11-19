@@ -112,20 +112,20 @@
 }
 
 .wrapper-container {
-    width: 30rem;
+    width: min(30rem, 95vw);
     height: 32rem;
     overflow: hidden;
     position: relative;
 }
 
 .add-wrapper {
-    width: 30rem;
+    width: min(30rem, 95vw);
     height: 32rem;
     transition: 0.5s;
 }
 
 .saved-add-wrapper {
-    width: 30rem;
+    width: min(30rem, 95vw);
     height: 32rem;
     transition: 0.5s;
 }
@@ -155,7 +155,7 @@
     margin-bottom: 1.15rem;
     border-radius: 10px;
     background: #fafafa;
-    padding: 0 0.5rem;
+    padding: 0.5rem;
 }
 
 .add-card-container.empty {
@@ -223,17 +223,5 @@
 
     .form-container {
         margin-top: 2rem;
-    }
-
-    .wrapper-container {
-        max-width: 95vw;
-    }
-
-    .add-wrapper {
-        max-width: 95vw;
-    }
-
-    .saved-add-wrapper {
-        max-width: 95vw;
     }
 }

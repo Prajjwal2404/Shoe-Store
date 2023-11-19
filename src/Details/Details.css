@@ -1,9 +1,11 @@
 .details {
     padding-top: 9rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: start;
-    gap: 6rem;
+    gap: 1rem;
+    position: relative;
+    margin: 0 1rem;
 }
 
 .back-btn {
@@ -211,6 +213,33 @@
     margin-bottom: 1.5rem;
 }
 
+@media screen and (max-width: 850px) {
+    .details {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .back-btn {
+        position: absolute;
+    }
+
+    .cover-div {
+        position: initial;
+        width: 36rem;
+    }
+
+    .cover {
+        max-width: 36rem;
+        height: 21.38rem;
+    }
+
+    .info {
+        width: 32rem;
+    }
+
+}
+
 @media screen and (max-width: 800px) and (orientation: portrait) {
     .details {
         flex-direction: column;
@@ -220,6 +249,7 @@
     }
 
     .back-btn {
+        position: absolute;
         top: 5rem;
     }
 
@@ -235,5 +265,9 @@
 
     .select-div {
         font-size: 1rem;
+    }
+
+    .info {
+        width: 25rem;
     }
 }
