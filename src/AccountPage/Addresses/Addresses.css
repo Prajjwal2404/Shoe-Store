@@ -72,7 +72,7 @@
 }
 
 .adds-wrapper {
-    width: min(30rem, 95vw);
+    width: min(30rem, 95dvw);
     transition: 0.5s;
     transform: scale(0);
     display: none;

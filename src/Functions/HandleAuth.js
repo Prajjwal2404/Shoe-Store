@@ -12,8 +12,9 @@ export default async function HandleAuth(formData) {
             else {
                 await setPersistence(auth, browserLocalPersistence)
             }
+            const path = window.location.pathname
             await signInWithEmailAndPassword(auth, formData.get('logMail'), formData.get('logPass'))
-            return { success: true, redirect: true }
+            return { success: true, redirect: true, path: path }
         }
         catch (err) {
             if (err.message == 'Firebase: Error (auth/invalid-login-credentials).') {
@@ -35,6 +36,7 @@ export default async function HandleAuth(formData) {
             if (!check.empty) {
                 throw 'matched'
             }
+            const path = window.location.pathname
             await createUserWithEmailAndPassword(auth, formData.get('regMail'), formData.get('regPass'))
             const userRef = doc(db, 'Users', auth.currentUser.uid)
             const fields = {
@@ -42,7 +44,7 @@ export default async function HandleAuth(formData) {
                 email: auth.currentUser.email.toLowerCase(), wishlist: [], cart: [], addresses: [], orders: []
             }
             await setDoc(userRef, fields)
-            return { success: true, redirect: true }
+            return { success: true, redirect: true, path: path }
         }
         catch (err) {
             if (err === 'matched') {

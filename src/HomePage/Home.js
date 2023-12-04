@@ -70,7 +70,7 @@ export default function Home() {
             }
             timer = setTimeout(() => {
                 if (slideShow.scroll) {
-                    if (Math.round(rd.current[5].scrollLeft) >= Math.round(rd.current[5].offsetWidth * 6)) {
+                    if (Math.round(rd.current[5].scrollLeft) >= Math.round(rd.current[5].offsetWidth * 5.75)) {
                         rd.current[5].scrollTo({ left: rd.current[5].offsetWidth, behavior: 'instant' })
                     }
                     else if (Math.round(rd.current[5].scrollLeft) === 0) {

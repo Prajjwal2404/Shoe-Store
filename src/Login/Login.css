@@ -12,7 +12,7 @@
 
 .wrapper {
     position: relative;
-    width: min(400px, 95vw);
+    width: min(400px, 95dvw);
     height: 440px;
     background-color: #ededed;
     border-radius: 20px;
@@ -234,5 +234,21 @@
 
     .outerest {
         top: 10%;
+    }
+
+    .wrapper {
+        height: 420px;
+    }
+
+    .wrapper.active {
+        height: 500px;
+    }
+
+    .wrapper.active-pass {
+        height: 390px;
+    }
+
+    .wrapper .form-box {
+        padding: 30px;
     }
 }

@@ -142,12 +142,13 @@ export default function Nav() {
                     {isMobile && <>
                         <NavLink to={'wishlist'} className={({ isActive }) => isActive ? 'active' : ''}
                             onClick={menuSwitch}>WISHLIST</NavLink>
-                        <NavLink to={'cart'} className={({ isActive }) => isActive ? 'active' : ''}
-                            onClick={menuSwitch}>CART</NavLink>
+                        <NavLink to={'cart'} className={`cart-mob ${({ isActive }) => isActive ? 'active' : ''}`}
+                            onClick={menuSwitch}><span>{cartItems ? `(${cartItems})` : ''}</span><span>CART</span></NavLink>
                         {signin ? <NavLink to={'account'} className={({ isActive }) => isActive ? 'active' : ''}
                             onClick={menuSwitch}>ACCOUNT</NavLink> : <a onClick={loginPopupM}>LOGIN</a>}
                     </>}
                 </div>
+                {isMobile && <div className='navigation-back' />}
                 <div className='searchDiv' ref={el => wrapper.current[4] = el}>
                     {isMobile && <IoIosArrowForward className='close-search' />}
                     <input

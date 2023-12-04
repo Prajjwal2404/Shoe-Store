@@ -13,7 +13,7 @@
     overflow-y: scroll;
     scrollbar-width: none;
     background: var(--white);
-    transition: 0.5s;
+    transition: left 0.5s;
     overscroll-behavior-y: contain;
 }
 
@@ -23,20 +23,44 @@
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
     .sidebar {
-        left: -15rem;
+        left: -100%;
         padding-top: 5rem;
+        width: 18rem;
     }
 
     .sidebar.show {
         left: 0;
     }
 
+    .sidebar-back {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        height: 100%;
+        width: 100%;
+        z-index: 29;
+        background: rgba(0, 0, 0, 0.5);
+        transition: backdrop-filter 0.25s linear 0.25s;
+    }
+
+    .sidebar.show~.sidebar-back {
+        left: 0;
+        backdrop-filter: blur(5px);
+    }
+
     .sidebar-close {
         position: absolute;
-        font-size: 1.4rem;
-        top: 4.5rem;
-        right: 5%;
+        font-size: 1.75rem;
+        top: 5rem;
+        left: 19rem;
+        color: var(--white);
         cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.25s linear 0.25s;
+    }
+
+    .sidebar.show~.sidebar-back .sidebar-close {
+        opacity: 1;
     }
 
     .sidebar-close:hover {

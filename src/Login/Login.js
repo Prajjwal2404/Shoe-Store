@@ -9,8 +9,13 @@ export async function action({ request }) {
     try {
         const result = await HandleAuth(formData)
         if (result.redirect) {
-            let pathname = new URL(request.url).searchParams.get('redirectTo') || '/'
-            throw redirect(pathname)
+            if (result.path !== '/') {
+                const pathname = new URL(request.url).searchParams.get('redirectTo') || '/'
+                throw redirect(pathname)
+            }
+            else {
+                window.location.reload()
+            }
         }
         return result
     }

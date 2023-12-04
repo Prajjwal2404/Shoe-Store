@@ -112,20 +112,20 @@
 }
 
 .wrapper-container {
-    width: min(30rem, 95vw);
+    width: min(30rem, 95dvw);
     height: 32rem;
     overflow: hidden;
     position: relative;
 }
 
 .add-wrapper {
-    width: min(30rem, 95vw);
+    width: min(30rem, 95dvw);
     height: 32rem;
     transition: 0.5s;
 }
 
 .saved-add-wrapper {
-    width: min(30rem, 95vw);
+    width: min(30rem, 95dvw);
     height: 32rem;
     transition: 0.5s;
 }

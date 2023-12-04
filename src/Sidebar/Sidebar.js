@@ -24,13 +24,15 @@ export default function Sidebar({ handleFilter, selectedCategory, selectedPrice,
     }
 
     return (
-        <section className='sidebar' ref={el => myref.current[0] = el}>
-            {isMobile && <IoMdClose className='sidebar-close' onClick={sidebarClose} />}
-            <Category handleChange={handleFilter} selected={selectedCategory} isMale={isMale} isFemale={isFemale}
-                isKids={isKids} />
-            <Price handleChange={handleFilter} selected={selectedPrice} />
-            <Color handleChange={handleFilter} selected={selectedColor} />
-            {isMobile && <SortMob handleChange={handleFilter} selected={selectedSort} />}
-        </section>
+        <>
+            <div className='sidebar' ref={el => myref.current[0] = el}>
+                <Category handleChange={handleFilter} selected={selectedCategory} isMale={isMale} isFemale={isFemale}
+                    isKids={isKids} />
+                <Price handleChange={handleFilter} selected={selectedPrice} />
+                <Color handleChange={handleFilter} selected={selectedColor} />
+                {isMobile && <SortMob handleChange={handleFilter} selected={selectedSort} />}
+            </div>
+            {isMobile && <div className='sidebar-back'><IoMdClose className='sidebar-close' onClick={sidebarClose} /></div>}
+        </>
     )
 }
