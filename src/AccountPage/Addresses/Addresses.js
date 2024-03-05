@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import './Addresses.css'
 import { Form, useActionData, useNavigation, useOutletContext } from 'react-router-dom';
 import AddressesCard from './AddressesCard';
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore/lite';
@@ -7,6 +6,7 @@ import { db, user } from '../../DB/FirebaseConfig';
 import { CurrentUser } from '../../Functions/HandleUser';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoCloseOutline } from 'react-icons/io5'
+import './Addresses.css'
 
 var num = 0
 export async function action({ request }) {
@@ -29,7 +29,7 @@ export async function action({ request }) {
             street: formData.get('street'), pincode: formData.get('pincode'),
             city: formData.get('city'), state: formData.get('state')
         }
-        addressArr.splice(Number(formData.get('idx')), 1, addressObj)
+        addressArr[Number(formData.get('idx'))] = addressObj
         await updateDoc(userDocRef, { addresses: addressArr })
     }
     return ++num
@@ -116,7 +116,7 @@ export default function Addresses() {
                 pincode: addressData.pincode, city: addressData.city, state: addressData.state
             }
             var addressesObj = addresses
-            addressesObj.splice(addressData.idx, 1, addressObj)
+            addressesObj[addressData.idx] = addressObj
             setAddresses(addressesObj)
         }
     }

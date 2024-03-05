@@ -9,8 +9,8 @@ import Star from '../Components/Star';
 import Review from './Reviews/Review';
 import { product, db, user } from '../DB/FirebaseConfig';
 import { CurrentUser } from '../Functions/HandleUser';
-import './Details.css'
 import Loading from '../Loading/Loading';
+import './Details.css'
 
 export function loader({ params }) {
     return defer({ product: product(params.id) })
