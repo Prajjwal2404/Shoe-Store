@@ -1,18 +1,17 @@
 import React from 'react'
-import './UserInfo.css'
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../DB/FirebaseConfig';
+import './UserInfo.css'
 
 export default function UserInfo() {
 
     const navigate = useNavigate();
     const outletContext = useOutletContext();
-    const userObj = outletContext.dataSetLoaded
+    const userObj = outletContext.userDetails
 
-    async function logout() {
-        await signOut(auth);
-        navigate('/');
+    function logout() {
+        sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
+        navigate('/', { replace: true });
     }
 
     return (

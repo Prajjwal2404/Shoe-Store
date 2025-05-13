@@ -1,57 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Form, redirect, useNavigate, useNavigation, useOutletContext } from 'react-router-dom'
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore/lite'
-import { db, user } from '../../DB/FirebaseConfig'
-import { CurrentUser } from '../../Functions/HandleUser'
-import './Address.css'
+import { Form, redirect, useNavigation, useOutletContext, useSubmit } from 'react-router-dom'
+import { addUserAddress, fetchUserCart, clearCart, placeOrder } from '../../Functions/HandleBackend'
 import AddressCard from '../../Components/AddressCard'
+import './Address.css'
 
 export async function action({ request }) {
     const formData = await request.formData()
-    if (formData.get('save')) {
-        const userDocRef = doc(db, 'Users', (await CurrentUser()).uid)
-        await updateDoc(userDocRef, {
-            addresses: arrayUnion({
-                fullName: formData.get('fullName'), phone: formData.get('phone'),
-                street: formData.get('street'), pincode: formData.get('pincode'),
-                city: formData.get('city'), state: formData.get('state')
-            })
-        })
-        await orderPlaced()
-        throw redirect('/cart?order=success')
+    if (!formData.get('addressId')) {
+        const addressObj = {
+            fullName: formData.get('fullName'), phone: formData.get('phone'),
+            street: formData.get('street'), pincode: formData.get('pincode'),
+            city: formData.get('city'), state: formData.get('state'), isSaved: formData.get('save') ? 1 : 0
+        }
+        const addressId = await addUserAddress(addressObj)
+        await orderPlaced(addressId)
+    } else {
+        const addressId = formData.get('addressId')
+        await orderPlaced(addressId)
     }
-    else {
-        await orderPlaced()
-        throw redirect('/cart?order=success')
-    }
+    throw redirect('/cart?order=success', { replace: true })
 }
 
-async function orderPlaced() {
-    const currentuser = await CurrentUser()
-    const userObj = await user(currentuser.uid)
-    const date = new Date()
-    const items = userObj.cart.map(item => ({
-        ...item, timeStamp: date, month: `${date.toLocaleString('default',
-            { month: 'long' })} ${date.getFullYear()}`
-    }))
-    const userDocRef = doc(db, 'Users', currentuser.uid)
-    await updateDoc(userDocRef, { cart: [] })
-    await items.forEach(async item => await updateDoc(userDocRef, { orders: arrayUnion(item) }))
+async function orderPlaced(addressId) {
+    const userCart = await fetchUserCart()
+    await placeOrder(addressId, userCart)
+    await clearCart()
 }
 
 export default function AddressEl() {
 
     const navigation = useNavigation()
-    const navigate = useNavigate()
+    const submit = useSubmit()
     const ref = useRef([])
     const [addresses, setAddresses] = useState([])
-    const [selectedAdd, setSelectedAdd] = useState('add0')
+    const [selectedAdd, setSelectedAdd] = useState('')
     const outletContext = useOutletContext()
-    outletContext.getCartItems()
 
     useEffect(() => {
-        const dataset = outletContext.dataSetLoaded
-        const addressesArr = dataset.addresses.map((item, idx) =>
+        const dataset = outletContext.addresses
+        const addressesArr = dataset.map((item, idx) =>
         (<AddressCard
             key={idx}
             fullName={item.fullName}
@@ -60,7 +47,7 @@ export default function AddressEl() {
             pincode={item.pincode}
             city={item.city}
             state={item.state}
-            value={`add${idx}`}
+            value={item.id}
             selected={selectedAdd}
             onChangeHandler={onChangeHandler} />)
         )
@@ -94,9 +81,7 @@ export default function AddressEl() {
 
     async function proceed(event) {
         event.target.textContent = 'Proceeding...'
-        await orderPlaced()
-        navigate('/cart?order=success', { replace: true })
-        event.target.textContent = 'Proceed to Payment'
+        submit({ addressId: selectedAdd }, { method: 'post' })
     }
 
     return (

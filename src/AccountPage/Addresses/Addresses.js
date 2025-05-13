@@ -1,81 +1,71 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Form, useActionData, useNavigation, useOutletContext } from 'react-router-dom';
-import AddressesCard from './AddressesCard';
-import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore/lite';
-import { db, user } from '../../DB/FirebaseConfig';
-import { CurrentUser } from '../../Functions/HandleUser';
+import { Form, redirect, useNavigation, useOutletContext, useSubmit } from 'react-router-dom';
+import { addUserAddress, updateUserAddress, removeUserAddress } from '../../Functions/HandleBackend';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoCloseOutline } from 'react-icons/io5'
+import AddressesCard from './AddressesCard';
 import './Addresses.css'
 
-var num = 0
 export async function action({ request }) {
     const formData = await request.formData()
-    const currentuser = await CurrentUser()
-    const userDocRef = doc(db, 'Users', currentuser.uid)
     if (Number(formData.get('idx')) === -1) {
-        await updateDoc(userDocRef, {
-            addresses: arrayUnion({
-                fullName: formData.get('fullName'), phone: formData.get('phone'),
-                street: formData.get('street'), pincode: formData.get('pincode'),
-                city: formData.get('city'), state: formData.get('state')
-            })
+        await addUserAddress({
+            fullName: formData.get('fullName'), phone: formData.get('phone'),
+            street: formData.get('street'), pincode: formData.get('pincode'),
+            city: formData.get('city'), state: formData.get('state'), isSaved: 1
         })
     }
     else {
-        var addressArr = (await user(currentuser.uid)).addresses
-        const addressObj = {
-            fullName: formData.get('fullName'), phone: formData.get('phone'),
-            street: formData.get('street'), pincode: formData.get('pincode'),
-            city: formData.get('city'), state: formData.get('state')
+        if (request.method === 'DELETE') {
+            await removeUserAddress(formData.get('idx'))
         }
-        addressArr[Number(formData.get('idx'))] = addressObj
-        await updateDoc(userDocRef, { addresses: addressArr })
+        else {
+            const addressObj = {
+                fullName: formData.get('fullName'), phone: formData.get('phone'),
+                street: formData.get('street'), pincode: formData.get('pincode'),
+                city: formData.get('city'), state: formData.get('state')
+            }
+            await updateUserAddress(formData.get('idx'), addressObj)
+        }
     }
-    return ++num
+    throw redirect('/account/addresses')
 }
 
 export default function Addresses() {
 
-    const navigation = useNavigation()
     const ref = useRef()
+    const navigation = useNavigation()
     const outletContext = useOutletContext()
-    const [addresses, setAddresses] = useState(outletContext.dataSetLoaded.addresses)
+    const submit = useSubmit()
+    const [addresses, setAddresses] = useState(outletContext.userAddresses)
     const [addressData, setAddressData] = useState({
-        idx: -1, fullName: '', phone: '', street: '',
+        id: -1, fullName: '', phone: '', street: '',
         pincode: '', city: '', state: ''
     })
-    const action = useActionData()
 
     useEffect(() => {
-        if (action) {
-            closeAddress()
-            refreshAddresses()
-        }
-    }, [action])
+        closeAddress()
+        setAddresses(outletContext.userAddresses)
+    }, [outletContext.userAddresses])
 
-    var addressesCardArr = addresses.map((item, idx) =>
+    let addressesCardArr = addresses.map(item =>
     (<AddressesCard
-        key={idx}
+        key={item.id}
         fullName={item.fullName}
         phone={item.phone}
         street={item.street}
         pincode={item.pincode}
         city={item.city}
         state={item.state}
-        idx={idx}
+        idx={item.id}
         remove={remove}
         edit={editAddress} />
     ))
 
-    addressesCardArr.reverse()
 
     async function remove(event, idx) {
         event.stopPropagation()
-        const removeAdd = addresses[idx]
-        const userDocRef = doc(db, 'Users', (await CurrentUser()).uid)
-        await updateDoc(userDocRef, { addresses: arrayRemove(removeAdd) })
-        setAddresses(prevAddresses => prevAddresses.filter((_, index) => index !== idx))
+        submit({ idx }, { method: 'delete', action: '/account', replace: true })
     }
 
     function autoFill(event) {
@@ -103,35 +93,17 @@ export default function Addresses() {
         setAddressData(prevAddressData => ({ ...prevAddressData, [name]: value }))
     }
 
-    function refreshAddresses() {
-        if (addressData.idx === -1) {
-            setAddresses(prevAddresses => ([...prevAddresses, {
-                fullName: addressData.fullName, phone: addressData.phone, street: addressData.street,
-                pincode: addressData.pincode, city: addressData.city, state: addressData.state
-            }]))
-        }
-        else {
-            var addressObj = {
-                fullName: addressData.fullName, phone: addressData.phone, street: addressData.street,
-                pincode: addressData.pincode, city: addressData.city, state: addressData.state
-            }
-            var addressesObj = addresses
-            addressesObj[addressData.idx] = addressObj
-            setAddresses(addressesObj)
-        }
-    }
-
     function editAddress(idx) {
         window.scrollTo(0, 0);
-        const editAdd = addresses[idx]
-        setAddressData({ idx: idx, ...editAdd })
+        const editAdd = addresses.find(address => address.id === idx)
+        setAddressData({ ...editAdd })
         ref.current.style.display = "block";
         setTimeout(() => ref.current.style.transform = "scale(1)", 100);
     }
 
     function addAddress() {
         window.scrollTo(0, 0);
-        setAddressData({ idx: -1, fullName: '', phone: '', street: '', pincode: '', city: '', state: '' })
+        setAddressData({ id: -1, fullName: '', phone: '', street: '', pincode: '', city: '', state: '' })
         ref.current.style.display = "block";
         setTimeout(() => ref.current.style.transform = "scale(1)", 100);
     }
@@ -151,8 +123,8 @@ export default function Addresses() {
                 <div className='adds-wrapper' ref={ref}>
                     <span className='adds-close' onClick={closeAddress}><IoCloseOutline /></span>
                     <button className='adds-autofill' onClick={autoFill}>Autofill using current location</button>
-                    <Form className='adds-form' method='post' replace>
-                        <input className='id-input' type='number' name='idx' value={addressData.idx}
+                    <Form className='adds-form' method='post' action='/account' replace>
+                        <input className='id-input' type='number' name='idx' value={addressData.id}
                             onChange={inputHandler} />
                         <div className="adds-input-div">
                             <input className='adds-input' type="text" required name="fullName" placeholder='Name'
@@ -181,7 +153,7 @@ export default function Addresses() {
                             </div>
                         </div>
                         <button disabled={navigation.state === 'submitting'} type="submit" className="adds-btn">
-                            {addressData.idx > -1 ? (navigation.state === 'submitting' ? 'Updating...' :
+                            {addressData.id > -1 ? (navigation.state === 'submitting' ? 'Updating...' :
                                 'Update Address') : (navigation.state === 'submitting' ? 'Adding...' : 'Add new Address')}
                         </button>
                     </Form>

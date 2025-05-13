@@ -40,8 +40,8 @@ export default function CartItem(props) {
                         <h3>{props.title}</h3>
                     </div>
                     {isMobile && <div className='cart-card-priceM'>
-                        <p>${props.newPrice}.00</p>
-                        <del>${props.prevPrice}.00</del>
+                        <p>${props.newPrice}</p>
+                        <del>${props.prevPrice}</del>
                     </div>}
                     {props.isPlaced ?
                         <div className='order-selection-div'>
@@ -57,8 +57,8 @@ export default function CartItem(props) {
                 </section>
                 {!isMobile && <section className='cart-price-sec'>
                     <div className='cart-card-price'>
-                        <p>${props.newPrice}.00</p>
-                        <del>${props.prevPrice}.00</del>
+                        <p>${props.newPrice}</p>
+                        <del>${props.prevPrice}</del>
                     </div>
                 </section>}
             </section>

@@ -9,13 +9,13 @@ export default function Price({ handleChange, selected }) {
             <div>
                 <FilterItem name='price' filter='All' value=''
                     onChangeHandler={handleChange} selected={selected} />
-                <FilterItem name='price' filter='$0 - $50' value='50'
+                <FilterItem name='price' filter='$0 - $50' value='50.00'
                     onChangeHandler={handleChange} selected={selected} />
-                <FilterItem name='price' filter='$50 - $100' value='100'
+                <FilterItem name='price' filter='$50 - $100' value='100.00'
                     onChangeHandler={handleChange} selected={selected} />
-                <FilterItem name='price' filter='$100 - $150' value='150'
+                <FilterItem name='price' filter='$100 - $150' value='150.00'
                     onChangeHandler={handleChange} selected={selected} />
-                <FilterItem name='price' filter='Over $150' value='200'
+                <FilterItem name='price' filter='Over $150' value='200.00'
                     onChangeHandler={handleChange} selected={selected} />
             </div>
         </div>

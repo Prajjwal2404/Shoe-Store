@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react'
 import Listings from '../Components/Listings'
 import { defer, useLoaderData, useSearchParams, Await } from 'react-router-dom';
-import { data } from '../DB/FirebaseConfig';
+import { fetchAllProducts } from '../Functions/HandleBackend';
 import Loading from '../Loading/Loading';
 
 export function loader() {
-    return defer({ dataSet: data() })
+    return defer({ dataSet: fetchAllProducts() })
 }
 
 export default function Search() {

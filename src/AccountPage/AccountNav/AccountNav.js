@@ -1,25 +1,24 @@
 import React, { Suspense } from 'react'
-import './AccountNav.css'
-import { Await, NavLink, Outlet, defer, useLoaderData, useOutletContext } from 'react-router-dom'
+import { Await, NavLink, Outlet, defer, useLoaderData } from 'react-router-dom'
+import { RequireAuth } from '../../Functions/HandleAuth'
+import { fetchUserDetails, fetchUserAddresses, fetchUserOrders } from '../../Functions/HandleBackend'
 import Loading from '../../Loading/Loading'
-import RequireAuth, { CurrentUser } from '../../Functions/HandleUser'
-import { user } from '../../DB/FirebaseConfig'
+import './AccountNav.css'
 
 export async function loader({ request }) {
     await RequireAuth(request)
-    return defer({ dataSet: CurrentUser().then(res => user(res.uid)) })
+    return defer({ dataSet: [fetchUserDetails(), fetchUserAddresses(), fetchUserOrders()] })
 }
 
 export default function AccountNav() {
 
     const dataSetPromise = useLoaderData()
-    const outletContext = useOutletContext()
-    outletContext.getCartItems()
 
     return (
         <Suspense fallback={<Loading />}>
-            <Await resolve={dataSetPromise.dataSet}>
+            <Await resolve={Promise.all(dataSetPromise.dataSet)}>
                 {(dataSetLoaded) => {
+                    const [userDetails, userAddresses, userOrders] = dataSetLoaded
                     return (
                         <>
                             <nav className='acc-nav'>
@@ -30,7 +29,7 @@ export default function AccountNav() {
                                 <NavLink to={'orders'} className={({ isActive }) => isActive ? 'active-acc' : ''}>
                                     Order History</NavLink>
                             </nav>
-                            <Outlet context={{ dataSetLoaded }} />
+                            <Outlet context={{ userDetails, userAddresses, userOrders }} />
                         </>
                     )
                 }}

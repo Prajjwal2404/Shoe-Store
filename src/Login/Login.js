@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import HandleAuth from '../Functions/HandleAuth';
 import { IoMailOutline, IoCloseOutline, IoLockClosedOutline, IoPersonOutline } from 'react-icons/io5'
@@ -8,14 +8,9 @@ export async function action({ request }) {
     const formData = await request.formData()
     try {
         const result = await HandleAuth(formData)
-        if (result.redirect) {
-            if (result.path !== '/') {
-                const pathname = new URL(request.url).searchParams.get('redirectTo') || '/'
-                throw redirect(pathname)
-            }
-            else {
-                window.location.reload()
-            }
+        if (result?.success && result.redirect) {
+            const pathname = new URL(request.url).searchParams.get('redirectTo') || '/'
+            throw redirect(pathname)
         }
         return result
     }
@@ -23,30 +18,16 @@ export async function action({ request }) {
     catch (err) {
         return err
     }
-
-    finally {
-        reset()
-    }
-}
-
-function reset() {
-    Array.from(document.getElementsByClassName('form')).forEach(el => el.reset());
-    Array.from(document.getElementsByClassName('form-input')).forEach(el => el.setAttribute('empty', ''));
 }
 
 export default function Login({ wrapper }) {
 
+    const formRef = useRef([]);
     const navigation = useNavigation();
-
     const actionData = useActionData();
     const login = actionData?.login;
     const register = actionData?.register;
-    const change = actionData?.change;
-
-    if (actionData?.success) {
-        loginClose()
-    }
-
+    const change = actionData?.change || actionData?.message;
 
     function active() {
         wrapper.current[0].classList.toggle('active');
@@ -59,11 +40,24 @@ export default function Login({ wrapper }) {
     function loginClose() {
         wrapper.current[0].style.transform = "scale(0)";
         setTimeout(() => {
-            wrapper.current[0].style.display = "none"
-            wrapper.current[0].classList.remove('active', 'active-pass')
+            if (wrapper.current[0]) {
+                wrapper.current[0].style.display = "none"
+                wrapper.current[0].classList.remove('active', 'active-pass')
+            }
         }, 500);
     }
 
+    useEffect(() => {
+        if (actionData?.success) {
+            formRef.current.forEach((form) => {
+                form.reset();
+                const inputs = form.querySelectorAll('.form-input');
+                inputs.forEach((input) => {
+                    input.setAttribute('empty', '');
+                });
+            });
+        }
+    }, [actionData])
 
     return (
         <div className="outerest">
@@ -72,7 +66,7 @@ export default function Login({ wrapper }) {
                 <div className="form-box login">
                     <h2 className={login ? 'error' : ''}>Login</h2>
                     {login && <h4>{login}</h4>}
-                    <Form className='form' method='post' replace>
+                    <Form className='form' method='post' replace ref={el => formRef.current[0] = el}>
                         <div className="input-box">
                             <span className="icon"><IoMailOutline /></span>
                             <input className='form-input' type="email" required name="logMail" empty=''
@@ -100,7 +94,7 @@ export default function Login({ wrapper }) {
                 <div className="form-box register">
                     <h2 className={register ? 'error' : ''}>Registration</h2>
                     {register && <h4>{register}</h4>}
-                    <Form className='form' method='post' replace>
+                    <Form className='form' method='post' replace ref={el => formRef.current[1] = el}>
                         <div className="input-box">
                             <span className="icon"><IoPersonOutline /></span>
                             <input className='form-input' type="text" required name="regUser" empty=''
@@ -134,8 +128,8 @@ export default function Login({ wrapper }) {
                 </div>
                 <div className="form-box forgot-pass">
                     <h2 className={change ? 'error' : ''}>Reset Password</h2>
-                    {change && <h4>{change}</h4>}
-                    <Form className='form' method='post' replace>
+                    {change && <h4 className={actionData?.message ? 'sent' : ''}>{change}</h4>}
+                    <Form className='form' method='post' replace ref={el => formRef.current[2] = el}>
                         <div className="input-box">
                             <span className="icon"><IoPersonOutline /></span>
                             <input className='form-input' type="text" required name="resetUser" empty=''

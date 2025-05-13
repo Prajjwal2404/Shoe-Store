@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import './Orders.css'
 import { useOutletContext } from 'react-router-dom'
-import { product } from '../../DB/FirebaseConfig'
+import { fetchProductById } from '../../Functions/HandleBackend'
 import CartItem from '../../Components/CartItem'
+import './Orders.css'
 
 export default function Orders() {
 
@@ -11,10 +11,13 @@ export default function Orders() {
 
     useEffect(() => {
         async function fetchData() {
-            const dataSet = outletContext.dataSetLoaded.orders
+            const dataSet = outletContext.userOrders
             var months = []
             dataSet.forEach(item => {
-                if (!months.includes(item.month)) months.push(item.month)
+                const date = new Date(item.orderDate)
+                const month = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`
+                item.month = month
+                if (!months.includes(month)) months.push(month)
             })
             months = months.sort((a, b) => {
                 const dateA = new Date(a + '1')
@@ -23,12 +26,17 @@ export default function Orders() {
             })
             const ordersArr = await Promise.all(months.map(async (month, index) => {
                 var monthOrders = dataSet.filter(item => item.month === month)
-                monthOrders = monthOrders.sort((a, b) => b.timeStamp - a.timeStamp)
-                const orderItems = await Promise.all(monthOrders.map(async (monthOrder) => await product(monthOrder.id)))
+                monthOrders = monthOrders.sort((a, b) => b.orderDate - a.orderDate)
+                const orderItems = await Promise.all(monthOrders.map(async (monthOrder) =>
+                    await Promise.all(monthOrder.items.map(async (order) => {
+                        const productInfo = await fetchProductById(order.productId)
+                        return { ...productInfo, quantity: order.quantity, size: order.size }
+                    }))))
+                const orderItemsArr = orderItems.flat()
                 return (
                     <div className='orders-div' key={index}>
                         <h2>{month.toUpperCase()}</h2>
-                        {orderItems.map(({ id, img, company, title, prevPrice, newPrice }, idx) => (
+                        {orderItemsArr.map(({ id, img, company, title, prevPrice, newPrice, size, quantity }, idx) => (
                             <CartItem
                                 key={idx}
                                 id={id}
@@ -37,8 +45,8 @@ export default function Orders() {
                                 title={title}
                                 prevPrice={prevPrice}
                                 newPrice={newPrice}
-                                size={monthOrders[idx].size}
-                                quantity={monthOrders[idx].quantity}
+                                size={size}
+                                quantity={quantity}
                                 isPlaced={true} />
                         ))}
                     </div>

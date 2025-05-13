@@ -112,6 +112,10 @@
     text-align: center;
 }
 
+.form-box h4.sent {
+    color: green;
+}
+
 .form-box .error {
     transform: translateY(-10px);
 }

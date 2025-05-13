@@ -25,7 +25,7 @@ export default function Listings({ data, isWishlist, removeWishlist, isMale, isF
     )
   }
 
-  var brandShown;
+  let brandShown;
 
   function filterData(products, selectedCategory, selectedPrice, selectedColor, selectedBrand, selectedSort) {
 
@@ -36,7 +36,7 @@ export default function Listings({ data, isWishlist, removeWishlist, isMale, isF
     }
 
     if (selectedPrice) {
-      filteredProducts = filteredProducts.filter(({ newPrice }) => newPrice.toString() === selectedPrice);
+      filteredProducts = filteredProducts.filter(({ newPrice }) => newPrice === selectedPrice);
     }
 
     if (selectedColor) {
@@ -50,7 +50,7 @@ export default function Listings({ data, isWishlist, removeWishlist, isMale, isF
     }
 
     if (selectedSort === 'relevance') {
-      filteredProducts = filteredProducts.sort((a, b) => a.Sno - b.Sno);
+      filteredProducts = filteredProducts.sort((a, b) => a.id - b.id);
     }
 
     else if (selectedSort === 'rating') {

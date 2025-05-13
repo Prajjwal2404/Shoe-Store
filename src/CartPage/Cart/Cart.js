@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react'
+import { Link, useOutletContext, useSubmit } from 'react-router-dom'
+import { updateCartItem, removeFromCart, fetchProductById } from '../../Functions/HandleBackend'
 import CartItem from '../../Components/CartItem'
-import { CurrentUser } from '../../Functions/HandleUser'
-import { Link, useOutletContext } from 'react-router-dom'
-import { db, product } from '../../DB/FirebaseConfig'
-import { doc, updateDoc } from 'firebase/firestore/lite'
 import './Cart.css'
+
+export async function action({ request }) {
+    const formData = await request.formData()
+    const id = formData.get('id')
+    if (request.method === 'DELETE') {
+        await removeFromCart(id)
+    } else {
+        const quantity = formData.get('quantity')
+        const size = formData.get('size')
+        await updateCartItem(id, quantity, size)
+    }
+    return null
+}
 
 export default function CartEl() {
 
     const [cartDataSet, setCartDataSet] = useState([])
     const [cartItems, setCartItems] = useState([])
     const [total, setTotal] = useState({ amount: 0, saving: 0 })
-    const [updated, setUpdated] = useState(0)
     const outletContext = useOutletContext()
+    const submit = useSubmit()
 
     useEffect(() => {
         async function fetchData() {
-            const dataset = outletContext.dataSetLoaded
-            const cartItemArr = await Promise.all(dataset.cart.map(async (cartItem) => await product(cartItem.id)))
-            setCartItems(cartItemArr)
-            setCartDataSet(dataset.cart)
             await outletContext.getCartItems()
+            const dataset = outletContext.cart
+            const cartItemArr = await Promise.all(dataset.map(async (cartItem) => await fetchProductById(cartItem.id)))
+            setCartItems(cartItemArr)
+            setCartDataSet(dataset)
         }
         fetchData()
-    }, [])
+    }, [outletContext.cart])
 
     const totalAmount = total.amount + 10
 
@@ -37,22 +48,10 @@ export default function CartEl() {
         setTotal({ amount: totalAmount, saving: noDiscount - totalAmount })
     }, [cartDataSet])
 
-    useEffect(() => {
-        async function updateCart() {
-            if (updated > 0) {
-                const userDocRef = doc(db, 'Users', (await CurrentUser()).uid)
-                await updateDoc(userDocRef, { cart: cartDataSet })
-                await outletContext.getCartItems()
-                if (!cartDataSet.length > 0) outletContext.setEmpty(true)
-            }
-        }
-        updateCart()
-    }, [updated])
 
-
-    const cartProducts = cartItems.map(({ id, Sno, img, company, title, prevPrice, newPrice, gender }, idx) => (
+    const cartProducts = cartItems.map(({ id, img, company, title, prevPrice, newPrice, gender }, idx) => (
         <CartItem
-            key={Sno}
+            key={id}
             id={id}
             img={img}
             company={company}
@@ -70,46 +69,26 @@ export default function CartEl() {
     function updateSize(event, min, max, id) {
         event.preventDefault();
         const elemId = event.target.id;
-        setCartDataSet(prevCartDataSet => prevCartDataSet.map(item => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    size: ((elemId === 'minus' && item.size > min) ? item.size - 1 :
-                        (elemId === 'plus' && item.size < max) ? item.size + 1 : item.size)
-                }
-            }
-            else {
-                return item
-            }
-        }))
-        setUpdated(updated + 1)
+        const cartItem = cartDataSet.find(item => item.id === id)
+        const size = (elemId === 'minus' && cartItem.size > min) ? Number(cartItem.size) - 1 :
+            (elemId === 'plus' && cartItem.size < max) ? Number(cartItem.size) + 1 : cartItem.size
+        if (size === cartItem.size) return
+        submit({ id, quantity: cartItem.quantity, size }, { method: 'PUT', action: '/cart', replace: true })
     }
 
     function updateQuantity(event, min, max, id) {
         event.preventDefault();
         const elemId = event.target.id;
-        setCartDataSet(prevCartDataSet => prevCartDataSet.map(item => {
-            if (item.id === id) {
-                return {
-                    ...item,
-                    quantity: ((elemId === 'minus' && item.quantity > min) ? item.quantity - 1 :
-                        (elemId === 'plus' && item.quantity < max) ? item.quantity + 1 : item.quantity)
-                }
-            }
-            else {
-                return item
-            }
-        }))
-        setUpdated(updated + 1)
+        const cartItem = cartDataSet.find(item => item.id === id)
+        const quantity = (elemId === 'minus' && cartItem.quantity > min) ? cartItem.quantity - 1 :
+            (elemId === 'plus' && cartItem.quantity < max) ? cartItem.quantity + 1 : cartItem.quantity
+        if (quantity === cartItem.quantity) return
+        submit({ id, quantity, size: cartItem.size }, { method: 'PUT', action: '/cart', replace: true })
     }
 
     function removeItem(id, event) {
         event.preventDefault();
-        let tempItemsArr = cartItems.filter(item => item.id !== id)
-        setCartItems(tempItemsArr)
-        let tempDataSetArr = cartDataSet.filter(item => item.id !== id)
-        setCartDataSet(tempDataSetArr)
-        setUpdated(updated + 1)
+        submit({ id }, { method: 'DELETE', action: '/cart', replace: true })
     }
 
 

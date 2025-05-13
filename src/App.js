@@ -19,9 +19,12 @@ import Orders from './AccountPage/Orders/Orders';
 import LoginPage from './Pages/LoginPage';
 import NotFound from './Pages/NotFoundPage';
 import Error from './Pages/ErrorPage';
-import { action as loginAction } from './Login/Login';
+import { action as DetailsAction } from './Details/Details';
+import { action as WishListAction } from './Pages/WishList';
+import { action as CartAction } from './CartPage/Cart/Cart';
 import { action as addressAction } from './CartPage/Address/Address';
 import { action as addressesAction } from './AccountPage/Addresses/Addresses';
+import { action as loginAction } from './Login/Login';
 import { loader as HomeLoader } from './HomePage/Home';
 import { loader as MenLoader } from './Pages/MenPage';
 import { loader as WomenLoader } from './Pages/WomenPage';
@@ -42,16 +45,16 @@ export default function App() {
             <Route path='women' element={<Women />} loader={WomenLoader} errorElement={<Error />} />
             <Route path='kids' element={<Kids />} loader={KidsLoader} errorElement={<Error />} />
             <Route path='search' element={<Search />} loader={SearchLoader} errorElement={<Error />} />
-            <Route path='details/:id' element={<Details />} loader={DetailLoader} errorElement={<Error />} />
-            <Route path='wishlist' element={<WishList />} loader={WishlistLoader} errorElement={<Error />} />
-            <Route path='cart' element={<CartNav />} loader={CartLoader} errorElement={<Error />} >
+            <Route path='details/:id' element={<Details />} loader={DetailLoader} action={DetailsAction} errorElement={<Error />} />
+            <Route path='wishlist' element={<WishList />} loader={WishlistLoader} action={WishListAction} errorElement={<Error />} />
+            <Route path='cart' element={<CartNav />} loader={CartLoader} action={CartAction} errorElement={<Error />} >
                 <Route index element={<CartEl />} />
                 <Route path='address' element={<AddressEl />} action={addressAction} />
                 <Route path='payment' element={<PaymentEl />} />
             </Route>
-            <Route path='account' element={<AccountNav />} loader={AccountLoader} errorElement={<Error />} >
+            <Route path='account' element={<AccountNav />} loader={AccountLoader} action={addressesAction} errorElement={<Error />} >
                 <Route index element={<UserInfo />} />
-                <Route path='addresses' element={<Addresses />} action={addressesAction} />
+                <Route path='addresses' element={<Addresses />} />
                 <Route path='orders' element={<Orders />} />
             </Route>
             <Route path='login' element={<LoginPage />} action={loginAction} loader={LoginLoader} />
@@ -60,8 +63,6 @@ export default function App() {
     ))
 
     return (
-        <>
-            <RouterProvider router={router} />
-        </>
+        <RouterProvider router={router} />
     )
 }

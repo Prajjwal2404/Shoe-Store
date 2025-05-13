@@ -1,84 +1,125 @@
-import { db, auth } from "../DB/FirebaseConfig"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, browserLocalPersistence, sendPasswordResetEmail } from "firebase/auth"
-import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore/lite"
+import { redirect } from 'react-router-dom';
+
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export default async function HandleAuth(formData) {
 
     if (formData.get('logMail')) {
         try {
-            if (!formData.get('remember')) {
-                await setPersistence(auth, browserSessionPersistence)
-            }
-            else {
-                await setPersistence(auth, browserLocalPersistence)
-            }
-            const path = window.location.pathname
-            await signInWithEmailAndPassword(auth, formData.get('logMail'), formData.get('logPass'))
-            return { success: true, redirect: true, path: path }
-        }
-        catch (err) {
-            if (err.message == 'Firebase: Error (auth/invalid-login-credentials).') {
-                throw { login: 'Incorrect email or password' }
-            }
-            else {
-                console.error(err)
-                alert(err.message)
-            }
-        }
-    }
+            const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.get('logMail'),
+                    password: formData.get('logPass'),
+                }),
+            });
 
-    else if (formData.get('regUser')) {
+            const data = await response.json();
 
+            if (!response.ok) {
+                throw new Error(data.error || 'Login failed');
+            }
+
+            if (data.token) {
+                if (formData.get('remember')) localStorage.setItem('token', data.token);
+                else sessionStorage.setItem('token', data.token);
+                return { success: true, redirect: true };
+            } else {
+                throw new Error('Login successful, but no token received.');
+            }
+        } catch (err) {
+            throw { login: err.message };
+        }
+    } else if (formData.get('regUser')) {
         try {
-            const usersRef = collection(db, 'Users')
-            const q = query(usersRef, where('usernameLower', '==', formData.get('regUser').toLowerCase()))
-            const check = await getDocs(q)
-            if (!check.empty) {
-                throw 'matched'
+            const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: formData.get('regUser'),
+                    email: formData.get('regMail'),
+                    password: formData.get('regPass'),
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Registration failed');
             }
-            const path = window.location.pathname
-            await createUserWithEmailAndPassword(auth, formData.get('regMail'), formData.get('regPass'))
-            const userRef = doc(db, 'Users', auth.currentUser.uid)
-            const fields = {
-                username: formData.get('regUser'), usernameLower: formData.get('regUser').toLowerCase(),
-                email: auth.currentUser.email.toLowerCase(), wishlist: [], cart: [], addresses: [], orders: []
+
+            if (data.token) {
+                sessionStorage.setItem('token', data.token);
+                return { success: true, redirect: true };
+            } else {
+                throw new Error('Register successful, but no token received.');
             }
-            await setDoc(userRef, fields)
-            return { success: true, redirect: true, path: path }
+
+        } catch (err) {
+            throw { register: err.message };
         }
-        catch (err) {
-            if (err === 'matched') {
-                throw { register: 'Username already exists' }
+    } else if (formData.get('resetUser')) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/auth/reset`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: formData.get('resetUser'),
+                    email: formData.get('resetMail')
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Password reset failed');
             }
-            else {
-                console.error(err)
-                alert(err.message)
+            return { success: true, message: data.message || 'Password reset link sent' };
+
+        } catch (err) {
+            throw { change: err.message };
+        }
+    }
+    return { error: "Unknown form submission" };
+}
+
+export async function RequireAuth(request) {
+    const token = getCurrentUserToken();
+
+    if (!token) {
+        const pathname = new URL(request.url).pathname;
+        throw redirect(`/login?redirectTo=${pathname}`);
+    } else {
+        const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                sessionStorage.removeItem('token');
+                localStorage.removeItem('token');
+                const pathname = new URL(request.url).pathname;
+                throw redirect(`/login?redirectTo=${pathname}`);
+            } else {
+                throw new Error('Failed to verify token');
             }
         }
     }
 
-    else {
-        try {
-            const usersRef = collection(db, 'Users')
-            const q = query(usersRef, where('usernameLower', '==', formData.get('resetUser').toLowerCase()))
-            const check = await getDocs(q)
-            if (!check.empty) {
-                if (check.docs[0].get('email') !== formData.get('resetMail').toLowerCase()) throw 'unmatched'
-            }
-            else {
-                throw 'unmatched'
-            }
-            await sendPasswordResetEmail(auth, formData.get('resetMail'))
-            return { success: true }
-        }
-        catch (err) {
-            if (err == 'unmatched') {
-                throw { change: "Username or Email doesn't exists" }
-            }
-            else {
-                console.error(err)
-                alert(err.message)
-            }
-        }
-    }
+    return null;
+}
+
+export function getCurrentUserToken() {
+    return localStorage.getItem('token') || sessionStorage.getItem('token');
 }

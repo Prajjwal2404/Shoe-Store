@@ -1,19 +1,18 @@
 import React, { Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { Await, defer, useLoaderData, useOutletContext } from 'react-router-dom'
-import { data } from '../DB/FirebaseConfig'
+import { Await, defer, useLoaderData } from 'react-router-dom'
+import { fetchAllProducts } from '../Functions/HandleBackend'
 import Loading from '../Loading/Loading'
 import Card from '../Components/Card'
 import './Home.css'
 
 export function loader() {
-    return defer({ dataSet: data() })
+    return defer({ dataSet: fetchAllProducts() })
 }
 
 export default function Home() {
 
     const dataSetPromise = useLoaderData()
     const rd = useRef([])
-    const outletContext = useOutletContext()
     const [slideShow, setSlideShow] = useState({ value: 0, scroll: true })
     const [stop, setStop] = useState(true)
 
@@ -33,8 +32,7 @@ export default function Home() {
     }, [stop])
 
     useEffect(() => {
-        var counter = 0
-        outletContext.getCartItems()
+        let counter = 0
         function slider() {
             if (rd.current.length > 0) {
                 for (let i = 0; i < rd.current.length - 1; i++) {
@@ -99,10 +97,10 @@ export default function Home() {
             setSlideShow({ value: parseInt(event.target.value), scroll: false })
         }
 
-        const fourtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === 150)
-        const fourtyOffElems = fourtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
+        const fourtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === '150.00')
+        const fourtyOffElems = fourtyOffArr.map(({ id, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
-            key={Sno}
+            key={id}
             id={id}
             img={img}
             star={star}
@@ -112,10 +110,10 @@ export default function Home() {
             newPrice={newPrice}
             gender={gender} />))
 
-        const sixtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === 100)
-        const sixtyOffElems = sixtyOffArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
+        const sixtyOffArr = dataSetLoaded.filter(({ newPrice }) => newPrice === '100.00')
+        const sixtyOffElems = sixtyOffArr.map(({ id, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
-            key={Sno}
+            key={id}
             id={id}
             img={img}
             star={star}
@@ -126,9 +124,9 @@ export default function Home() {
             gender={gender} />))
 
         const hushArr = dataSetLoaded.filter(({ company }) => company === 'Hush Puppies')
-        const hushElems = hushArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
+        const hushElems = hushArr.map(({ id, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
-            key={Sno}
+            key={id}
             id={id}
             img={img}
             star={star}
@@ -139,9 +137,9 @@ export default function Home() {
             gender={gender} />))
 
         const pumaArr = dataSetLoaded.filter(({ company }) => company === 'Puma')
-        const pumaElems = pumaArr.map(({ id, Sno, img, star, title, reviews, prevPrice, newPrice, gender }) =>
+        const pumaElems = pumaArr.map(({ id, img, star, title, reviews, prevPrice, newPrice, gender }) =>
         (<Card
-            key={Sno}
+            key={id}
             id={id}
             img={img}
             star={star}

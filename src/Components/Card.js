@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Star from './Star';
 import { Link, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { IoMdCloseCircle } from 'react-icons/io'
-import { CurrentUser } from '../Functions/HandleUser';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore/lite';
-import { db, user } from '../DB/FirebaseConfig';
+import { getCurrentUserToken } from '../Functions/HandleAuth';
+import { addToCart, fetchUserCart } from '../Functions/HandleBackend';
+import Star from './Star';
 
 export default function Card(props) {
 
@@ -15,29 +14,28 @@ export default function Card(props) {
 
     async function handleClick(event) {
         event.preventDefault();
-        const currentuser = await CurrentUser();
+        const currentuser = getCurrentUserToken();
         if (currentuser) {
-            var size
+            let size
             if (props.gender === 'Male') size = 6
             else if (props.gender === 'Female') size = 3
             else size = 2
 
-            const userDocRef = doc(db, 'Users', currentuser.uid)
-            await updateDoc(userDocRef, { cart: arrayUnion({ id: props.id, quantity: 1, size: size }) })
+            await addToCart(props.id, 1, size)
             await outletContext.getCartItems()
             setInCart(true)
         }
         else {
-            navigate(`/login?redirectTo=${location.pathname}`)
+            navigate(`/login?redirectTo=${location.pathname}`, { replace: true })
         }
     }
 
     useEffect(() => {
         async function checkCart() {
-            const currentuser = await CurrentUser();
+            const currentuser = getCurrentUserToken();
             if (currentuser) {
-                const userObj = await user(currentuser.uid);
-                if (userObj.cart.find(e => e.id === props.id)) {
+                const userCart = await fetchUserCart();
+                if (userCart.find(e => e.id === props.id)) {
                     setInCart(true)
                 }
             }
@@ -58,12 +56,12 @@ export default function Card(props) {
                     <h3>{props.title}</h3>
                 </div>
                 <div className='reviews'>
-                    <Star className='stars' stars={props.star} />
+                    <Star className='stars' stars={Math.round(props.star)} />
                     <span className='total-reviews'>{`(${props.reviews} review${props.reviews > 1 ? 's' : ''})`}</span>
                 </div>
                 <section className='price'>
                     <div className='card-price'>
-                        ${props.newPrice}<del>${props.prevPrice}.00</del>
+                        ${Number(props.newPrice).toFixed(0)}<del>${props.prevPrice}</del>
                     </div>
                     <div className={`bag ${inCart ? 'in-bag' : ''}`} onClick={handleClick}>
                         {inCart ? 'Added' : 'Add To Cart'}

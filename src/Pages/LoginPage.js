@@ -1,11 +1,15 @@
 import React, { useRef } from 'react'
-import Login from '../Login/Login'
-import { CurrentUser } from '../Functions/HandleUser';
 import { redirect } from 'react-router-dom';
+import { getCurrentUserToken } from '../Functions/HandleAuth';
+import Login from '../Login/Login'
 
-export async function loader() {
-    const required = await CurrentUser()
-    if (required) throw redirect('/')
+export async function loader({ request }) {
+    const required = getCurrentUserToken();
+    if (required) {
+        const redirectTo = new URL(request.url).searchParams.get('redirectTo')
+        if (redirectTo) throw redirect(redirectTo)
+        else throw redirect('/account')
+    }
     return null
 }
 
