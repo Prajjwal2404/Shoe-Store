@@ -6,14 +6,15 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+    secrets:
+      REACT_APP_API_BASE_URL:
+        required: true
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up environment variables
-        run: |
-          echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
       - run: npm install
       - run: CI=false npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
