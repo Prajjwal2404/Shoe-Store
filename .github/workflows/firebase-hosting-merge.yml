@@ -15,6 +15,7 @@ jobs:
         run: |
           echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
       - run: npm install
+      - run: echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> $GITHUB_ENV
       - run: CI=false npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
